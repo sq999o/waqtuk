@@ -1,0 +1,145 @@
+{
+  "actions": {
+    "activities": [
+      "addActivity",
+      "updateActivity",
+      "deleteActivity"
+    ],
+    "categories": [
+      "addCategory",
+      "renameCategory",
+      "deleteCategory",
+      "addDefaultCategory",
+      "renameDefaultCategory",
+      "setCategoryActive"
+    ],
+    "announcements": [
+      "saveAnnouncement",
+      "publishAnnouncement",
+      "unpublishAnnouncement"
+    ],
+    "goals": [
+      "addGoal",
+      "updateGoal",
+      "deleteGoal"
+    ],
+    "feedback": [
+      "addFeedback",
+      "reportFeedback",
+      "decideReport"
+    ],
+    "accounts": [
+      "register",
+      "login",
+      "updateProfile",
+      "updateUser",
+      "setUserStatus"
+    ],
+    "sharing": [
+      "sendRequest",
+      "cancelRequest",
+      "revokeAccess",
+      "acceptRequest",
+      "declineRequest",
+      "endSharing"
+    ]
+  },
+  "selectors": {
+    "activities": [
+      "myActivities",
+      "getActivity"
+    ],
+    "catalog": [
+      "getCategory",
+      "myCategories",
+      "announcementsFor"
+    ],
+    "goals": [
+      "myGoals",
+      "myFeedback"
+    ],
+    "accounts": [
+      "getUser",
+      "myRequests",
+      "mentorRequests",
+      "sharedStudents",
+      "getSharedData",
+      "usageFor"
+    ]
+  },
+  "helpers": {
+    "time": [
+      "formatDuration",
+      "formatHours",
+      "durationMinutes",
+      "addDays",
+      "startOfWeek",
+      "endOfWeek",
+      "formatDateLong",
+      "formatDateShort",
+      "formatTime",
+      "formatActivityRange",
+      "isFuture",
+      "getPeriodRange",
+      "getPreviousRange"
+    ],
+    "stats": [
+      "sumByCategory",
+      "totalMinutes",
+      "percentages",
+      "topCategoryId",
+      "compare"
+    ],
+    "goals": [
+      "goalProgress",
+      "isOnTrack",
+      "goalSummary",
+      "goalMessage"
+    ],
+    "ids": [
+      "makeId"
+    ]
+  },
+  "validators": {
+    "activity": [
+      "validateActivity"
+    ],
+    "category": [
+      "validateCategoryName"
+    ],
+    "goal": [
+      "validateGoal"
+    ],
+    "account": [
+      "validateEmail",
+      "validatePassword",
+      "validateRegistration"
+    ]
+  },
+  "ui": [
+    "Button",
+    "Input",
+    "Select",
+    "Textarea",
+    "Checkbox",
+    "Radio",
+    "Card",
+    "Badge",
+    "Alert",
+    "Icon",
+    "PageHeader",
+    "StatCard",
+    "EmptyState",
+    "CategoryDot",
+    "ProgressBar",
+    "Toast",
+    "SegmentedControl",
+    "Table",
+    "Modal",
+    "ConfirmDialog"
+  ],
+  "charts": [
+    "BarChart",
+    "DonutChart"
+  ]
+}

@@ -1,0 +1,156 @@
+[
+  {
+    "path": "/",
+    "file": "src/pages/auth/LoginPage.jsx",
+    "role": "all",
+    "owner": "Dev 4",
+    "title": "LoginPage"
+  },
+  {
+    "path": "/dashboard",
+    "file": "src/pages/student/Dashboard.jsx",
+    "role": "student",
+    "owner": "Dev 1",
+    "title": "Dashboard"
+  },
+  {
+    "path": "/activities",
+    "file": "src/pages/student/Activities.jsx",
+    "role": "student",
+    "owner": "Dev 1",
+    "title": "Activities"
+  },
+  {
+    "path": "/categories",
+    "file": "src/pages/student/Categories.jsx",
+    "role": "student",
+    "owner": "Dev 2",
+    "title": "Categories"
+  },
+  {
+    "path": "/goals",
+    "file": "src/pages/student/Goals.jsx",
+    "role": "student",
+    "owner": "Dev 3",
+    "title": "Goals"
+  },
+  {
+    "path": "/calendar",
+    "file": "src/pages/student/Calendar.jsx",
+    "role": "student",
+    "owner": "Dev 1",
+    "title": "Calendar"
+  },
+  {
+    "path": "/reports",
+    "file": "src/pages/student/Reports.jsx",
+    "role": "student",
+    "owner": "Dev 1",
+    "title": "Reports"
+  },
+  {
+    "path": "/sharing",
+    "file": "src/pages/student/Sharing.jsx",
+    "role": "student",
+    "owner": "Dev 4",
+    "title": "Sharing"
+  },
+  {
+    "path": "/feedback",
+    "file": "src/pages/student/Feedback.jsx",
+    "role": "student",
+    "owner": "Dev 3",
+    "title": "Feedback"
+  },
+  {
+    "path": "/profile",
+    "file": "src/pages/student/Profile.jsx",
+    "role": "student",
+    "owner": "Dev 2",
+    "title": "Profile"
+  },
+  {
+    "path": "/mentor",
+    "file": "src/pages/mentor/MentorHome.jsx",
+    "role": "mentor",
+    "owner": "Dev 4",
+    "title": "MentorHome"
+  },
+  {
+    "path": "/mentor/requests",
+    "file": "src/pages/mentor/MentorRequests.jsx",
+    "role": "mentor",
+    "owner": "Dev 4",
+    "title": "MentorRequests"
+  },
+  {
+    "path": "/mentor/students",
+    "file": "src/pages/mentor/MentorStudents.jsx",
+    "role": "mentor",
+    "owner": "Dev 4",
+    "title": "MentorStudents"
+  },
+  {
+    "path": "/mentor/students/:id",
+    "file": "src/pages/mentor/MentorStudent.jsx",
+    "role": "mentor",
+    "owner": "Dev 3",
+    "title": "MentorStudent"
+  },
+  {
+    "path": "/mentor/goals/:id",
+    "file": "src/pages/mentor/MentorGoal.jsx",
+    "role": "mentor",
+    "owner": "Dev 3",
+    "title": "MentorGoal"
+  },
+  {
+    "path": "/mentor/announcements",
+    "file": "src/pages/mentor/MentorAnnouncements.jsx",
+    "role": "mentor",
+    "owner": "Dev 2",
+    "title": "MentorAnnouncements"
+  },
+  {
+    "path": "/mentor/profile",
+    "file": "src/pages/mentor/MentorProfile.jsx",
+    "role": "mentor",
+    "owner": "Dev 2",
+    "title": "MentorProfile"
+  },
+  {
+    "path": "/admin",
+    "file": "src/pages/admin/AdminDashboard.jsx",
+    "role": "admin",
+    "owner": "Dev 1",
+    "title": "AdminDashboard"
+  },
+  {
+    "path": "/admin/users",
+    "file": "src/pages/admin/AdminUsers.jsx",
+    "role": "admin",
+    "owner": "Dev 4",
+    "title": "AdminUsers"
+  },
+  {
+    "path": "/admin/categories",
+    "file": "src/pages/admin/AdminCategories.jsx",
+    "role": "admin",
+    "owner": "Dev 2",
+    "title": "AdminCategories"
+  },
+  {
+    "path": "/admin/reports",
+    "file": "src/pages/admin/AdminReports.jsx",
+    "role": "admin",
+    "owner": "Dev 3",
+    "title": "AdminReports"
+  },
+  {
+    "path": "/admin/announcements",
+    "file": "src/pages/admin/AdminAnnouncements.jsx",
+    "role": "admin",
+    "owner": "Dev 2",
+    "title": "AdminAnnouncements"
+  }
+]
