@@ -28,7 +28,8 @@ try {
     await checkExports(`context/${name}Context.jsx`, [`${name}Provider`,hook]);
   }
   const validators = await server.ssrLoadModule('/src/utils/validators/index.js');
-  assert.deepEqual(validators.MESSAGES, {});
+  assert.ok(validators.MESSAGES && typeof validators.MESSAGES === 'object');
+  assert.ok(Object.values(validators.MESSAGES).every(value => typeof value === 'string'));
   assert.equal(routes.length, 22);
   assert.equal(new Set(routes.map(route => route.path)).size, 22);
   const routeSource = await readFile(new URL('../src/routes.jsx', import.meta.url), 'utf8');
@@ -40,22 +41,16 @@ try {
   }
   await checkExports('pages/student/activities/ActivityFormModal.jsx', ['default']);
   await checkExports('pages/dev/ComponentsPreview.jsx', ['default']);
-  const actions = await server.ssrLoadModule('/src/context/actions/index.js');
-  const data = Object.freeze({ users: Object.freeze([]), activities: Object.freeze([]) });
-  for (const [name, fn] of Object.entries(actions)) {
-    const result = fn(data);
-    assert.equal(result.data, data, `${name} must leave Phase 0 data unchanged`);
-    assert.deepEqual(result.result, { ok: true });
-  }
-  const selectors = await server.ssrLoadModule('/src/context/selectors/index.js');
-  const denied = selectors.getSharedData(data, { currentUser: null })('not-authorized');
-  assert.deepEqual(denied, { student: undefined, activities: [], goals: [] });
-  const usage = selectors.usageFor(data, {})('2026-11-02','2026-11-08');
-  assert.deepEqual(usage, { students: 0, mentors: 0, activities: 0, requests: 0, reports: 0 });
+  // Check interfaces/data shapes, not Phase 0 no-op behavior or empty seeds.
+  // Each owner adds behavior tests alongside their real implementation.
   for (const file of ['users','categories','activities','goals','sharing','feedback','announcements','reports']) {
-    assert.deepEqual(await readJson(`src/data/${file}.json`), []);
+    const records = await readJson(`src/data/${file}.json`);
+    assert.ok(Array.isArray(records), `${file}.json must be an array`);
+    assert.ok(records.every(record => typeof record.id === 'string' && record.id.length > 0));
+    assert.equal(new Set(records.map(record => record.id)).size, records.length, `${file}: duplicate IDs`);
   }
-  assert.deepEqual(await readJson('src/data/usage.json'), {});
+  const usage = await readJson('src/data/usage.json');
+  assert.ok(usage && typeof usage === 'object' && !Array.isArray(usage));
   // Render every UI component with representative controlled props; DOM warnings fail.
   const React = (await import('react')).default;
   const { renderToString } = await import('react-dom/server');
@@ -80,7 +75,7 @@ try {
     for (const name of contracts.ui) renderToString(React.createElement(MemoryRouter, null, React.createElement(ui[name], samples[name] || {})));
   } finally { console.error = originalError; }
   assert.deepEqual(errors, [], 'UI stubs must not leak custom props to DOM or warn');
-  console.log(`PASS: ${checked} export checks; 22 routes; providers; no-op contracts; empty seeds; UI render checks.`);
+  console.log(`PASS: ${checked} export checks; 22 routes; providers; data shapes; unique IDs; UI render checks.`);
 } finally {
   await server.close();
 }
