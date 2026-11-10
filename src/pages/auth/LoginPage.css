@@ -1,1 +1,46 @@
-/* Phase 0 placeholder. Owner: Dev 4. */
+/* Page-scoped styling keeps the current shared placeholders usable. */
+.wq-login-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.wq-login-content { max-width: 1160px; margin: 0 auto; }
+.wq-login-intro { margin: 16px auto 32px; text-align: center; }
+.wq-login-intro h1 { margin: 0 0 8px; font-size: 24px; font-weight: 600; }
+.wq-login-intro p { max-width: 520px; margin: 0 auto; color: var(--muted); }
+.wq-login-cards, .wq-login-passwords { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.wq-login-cards { align-items: start; }
+.wq-login-passwords { gap: 12px; }
+.wq-login-card { min-width: 0; padding: 24px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg); }
+.wq-login-card > header { margin-bottom: 16px; }
+.wq-login-card h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.wq-login-form { display: grid; gap: 16px; }
+.wq-login-form .wq-input { min-width: 0; }
+.wq-login-form .wq-input label { display: block; margin-bottom: 8px; }
+.wq-login-form .wq-input input {
+  width: 100%; min-width: 0; height: 44px; padding: 0 12px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--bg); color: var(--text);
+}
+.wq-login-card .wq-button {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
+  padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--bg); color: var(--text); font-weight: 600; cursor: pointer;
+}
+.wq-login-card .wq-button--primary { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.wq-login-card .wq-button--full { width: 100%; }
+.wq-login-card .wq-button:hover { opacity: 0.88; }
+.wq-login-card .wq-button:disabled { opacity: 0.6; cursor: not-allowed; }
+.wq-login-roles { min-width: 0; margin: 0; padding: 0; border: 0; }
+.wq-login-roles legend { padding: 0; margin-bottom: 8px; }
+.wq-login-role-options, .wq-login-preview-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.wq-login-role-options .wq-radio { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; cursor: pointer; }
+.wq-login-role-options input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
+.wq-login-preview { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 16px; }
+.wq-login-preview h3 { margin: 0 0 16px; color: var(--muted); font-size: 12px; font-weight: 500; }
+.wq-login-note { margin: 0; color: var(--muted); }
+.wq-login-error { min-width: 0; border-radius: 10px; overflow-wrap: anywhere; }
+.wq-login-error .wq-alert { padding: 12px 16px; border-radius: 10px; background: var(--err-bg); color: var(--err); }
