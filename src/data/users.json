@@ -1,1 +1,12 @@
-[]
+[
+  {"id": "s1", "name": "Hammad Albalawi", "mentorName": "Student A", "email": "student@example.com", "role": "student", "status": "active", "password": "Password1"},
+  {"id": "s2", "name": "Student B", "mentorName": "Student B", "email": "student.b@example.com", "role": "student", "status": "active", "password": "Password1"},
+  {"id": "s3", "name": "Student C", "mentorName": "Student C", "email": "student.c@example.com", "role": "student", "status": "active", "password": "Password1"},
+  {"id": "s4", "name": "Student D", "mentorName": "Student D", "email": "student.d@example.com", "role": "student", "status": "active", "password": "Password1"},
+  {"id": "s5", "name": "Student E", "mentorName": "Student E", "email": "student.e@example.com", "role": "student", "status": "suspended", "password": "Password1"},
+  {"id": "s6", "name": "Student F", "mentorName": "Student F", "email": "student.f@example.com", "role": "student", "status": "active", "password": "Password1"},
+  {"id": "m1", "name": "Mentor A", "email": "mentor@example.com", "role": "mentor", "status": "active", "password": "Password1"},
+  {"id": "m2", "name": "Mentor B", "email": "mentor.b@example.com", "role": "mentor", "status": "active", "password": "Password1"},
+  {"id": "m3", "name": "Mentor C", "email": "mentor.c@example.com", "role": "mentor", "status": "active", "password": "Password1"},
+  {"id": "a1", "name": "Admin User", "email": "admin@example.com", "role": "admin", "status": "active", "password": "Password1"}
+]
