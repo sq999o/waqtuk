@@ -1,5 +1,5 @@
-// Phase 0 in-memory bridge. Owner: Dev 2 must add persistence and complete this in Phase 1.
-import { createContext, useContext, useRef, useState } from 'react';
+// The data hub of the app. Pages read data and call actions only through useData().
+import { createContext, useContext, useRef, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import * as allActions from './actions';
 import * as allSelectors from './selectors';
@@ -13,7 +13,11 @@ import feedbackSeed from '../data/feedback.json';
 import announcementsSeed from '../data/announcements.json';
 import contentReportsSeed from '../data/reports.json';
 import usageSeed from '../data/usage.json';
+
+const DATA_KEY = "waqtuk.data.v1";
+const SEED_KEY = "waqtuk.seed.v1";
 const DataContext = createContext(null);
+
 function freshData() {
   return structuredClone({
     categories: categoriesSeed,
@@ -28,10 +32,33 @@ function freshData() {
     users: import.meta.env.DEV && usersSeed.length === 0 ? previewUsers : usersSeed,
   });
 }
+
+const SEED_TEXT = JSON.stringify(freshData());
+
+function loadFromStorageOrSeed(){
+  try{
+    const saved = localStorage.getItem(DATA_KEY);
+    if (saved && localStorage.getItem(SEED_KEY) === SEED_TEXT) return JSON.parse(saved);
+  }
+  catch{
+    // Damaged or blocked storage: start again from the seed.
+  }
+  return freshData();
+}
+
 export function DataProvider({ children }) {
   const { userId } = useAuth();
-  const [data, setData] = useState(freshData);
+  const [data, setData] = useState(loadFromStorageOrSeed);
   const dataRef = useRef(data);
+  useEffect(() => {
+    try{
+      localStorage.setItem(DATA_KEY, JSON.stringify(data));
+      localStorage.setItem(SEED_KEY, SEED_TEXT);
+    } catch{
+      // Storage is full or blocked: the in-memory data still works.
+      }
+    }, [data]
+  );
   const ctx = { currentUser: data.users.find(user => user.id === userId) };
   const actions = Object.fromEntries(Object.entries(allActions).map(([name, fn]) => [name, (...args) => {
     const current = dataRef.current;
@@ -45,4 +72,5 @@ export function DataProvider({ children }) {
   function resetData() { const next = freshData(); dataRef.current = next; setData(next); }
   return <DataContext.Provider value={{ ...data, ...ctx, ...actions, ...selectors, resetData }}>{children}</DataContext.Provider>;
 }
+
 export function useData() { return useContext(DataContext); }
