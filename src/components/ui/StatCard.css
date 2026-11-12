@@ -1,1 +1,16 @@
-/* Phase 0 placeholder. Owner: Dev 4. */
+.wq-stat-card {
+  min-width: 0;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.wq-stat-card-label { margin: 0 0 12px; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.wq-stat-card-value { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.25; }
+.wq-stat-card-hint { margin: 12px 0 0; font-size: 12px; font-weight: 500; line-height: 1.5; }
+.wq-stat-card-hint--neutral { color: var(--muted-card); }
+.wq-stat-card-hint--success { color: var(--ok); }
+.wq-stat-card-hint--warning { color: var(--warn); }
+.wq-stat-card-hint--danger { color: var(--err); }
+.wq-stat-card-hint--info { color: var(--blue-text); }
