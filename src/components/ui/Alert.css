@@ -1,1 +1,67 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Alert styles, values from the prototype states pages. Owner: Dev 2. */
+
+.wq-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.wq-alert--info {
+  background: var(--blue);
+  color: var(--blue-text);
+}
+
+.wq-alert--success {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.wq-alert--warning {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.wq-alert--danger {
+  background: var(--err-bg);
+  color: var(--err);
+}
+
+.wq-alert-icon {
+  flex: none;
+  margin-top: 1px;
+}
+
+.wq-alert-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.wq-alert-title {
+  font-weight: 600;
+}
+
+.wq-alert-close {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wq-alert-close:hover {
+  background: var(--surface-2);
+}
