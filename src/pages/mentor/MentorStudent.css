@@ -1,1 +1,199 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-mentorstudent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+}
+
+.wq-mentorstudent-access-card {
+  min-width: 0;
+}
+
+.wq-mentorstudent-fields {
+  width: 100%;
+  min-width: 0;
+  align-items: end;
+  gap: 16px;
+}
+
+.wq-mentorstudent-fields > * {
+  min-width: 0;
+}
+
+.wq-mentorstudent-readonly-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wq-mentorstudent-field-label {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.wq-mentorstudent-readonly-value {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  background: var(--surface);
+  color: var(--muted-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-apply {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.wq-mentorstudent-apply button {
+  min-width: 88px;
+}
+
+.wq-mentorstudent-range-error,
+.wq-mentorstudent-scope {
+  margin-top: 16px;
+}
+
+/* Summary cards */
+
+.wq-mentorstudent-summary-grid {
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  gap: 16px;
+}
+
+.wq-mentorstudent-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wq-mentorstudent-category span {
+  overflow-wrap: anywhere;
+}
+
+/* Shared goals */
+
+.wq-mentorstudent-goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wq-mentorstudent-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.wq-mentorstudent-goal + .wq-mentorstudent-goal {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.wq-mentorstudent-goal-title {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.wq-mentorstudent-goal-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-goal .wq-btn {
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.wq-mentorstudent-goal-notice {
+  margin-top: 16px;
+}
+
+/* Weekly reports */
+
+.wq-mentorstudent-reports-card {
+  min-width: 0;
+}
+
+.wq-mentorstudent-reports-grid {
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  gap: 16px;
+}
+
+.wq-mentorstudent-reports-list {
+  min-width: 0;
+}
+
+.wq-mentorstudent-report-name {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.wq-mentorstudent-report-dates {
+  color: var(--muted-card);
+  white-space: nowrap;
+}
+
+.wq-mentorstudent-report-unavailable {
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.wq-mentorstudent-report-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.wq-mentorstudent-report-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-report-detail p {
+  margin: 0;
+  color: var(--muted-card);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-report-detail strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.wq-mentorstudent-readonly-value,
+.wq-mentorstudent-scope,
+.wq-mentorstudent-report-detail {
+  overflow-wrap: anywhere;
+}
