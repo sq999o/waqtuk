@@ -1,1 +1,33 @@
-[]
+
+[
+  {
+    "id": "c1",
+    "feedbackId": "f1",
+    "reporterId": "s1",
+    "reason": "Inappropriate language",
+    "details": "Added by the reporter",
+    "status": "pending",
+    "decisionReason": "",
+    "date": "2026-11-06"
+  },
+  {
+    "id": "c2",
+    "feedbackId": "f5",
+    "reporterId": "s2",
+    "reason": "Harassment",
+    "details": "",
+    "status": "pending",
+    "decisionReason": "",
+    "date": "2026-11-06"
+  },
+  {
+    "id": "c3",
+    "feedbackId": "f6",
+    "reporterId": "s3",
+    "reason": "Spam",
+    "details": "",
+    "status": "pending",
+    "decisionReason": "",
+    "date": "2026-11-06"
+  }
+]
