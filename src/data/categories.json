@@ -1,1 +1,12 @@
-[]
+[
+  { "id": "cat-study", "name": "Study", "color": "#5B6CF0", "type": "default", "active": true, "ownerId": null },
+  { "id": "cat-work", "name": "Work", "color": "#F2B84B", "type": "default", "active": true, "ownerId": null },
+  { "id": "cat-exercise", "name": "Exercise", "color": "#3FB27F", "type": "default", "active": true, "ownerId": null },
+  { "id": "cat-sleep", "name": "Sleep", "color": "#A78BDA", "type": "default", "active": true, "ownerId": null },
+  { "id": "cat-commute", "name": "Commute", "color": "#9AA0A6", "type": "default", "active": false, "ownerId": null },
+  { "id": "cat-reading", "name": "Reading", "color": "#8FB3D9", "type": "custom", "active": true, "ownerId": "s1" },
+  { "id": "cat-social", "name": "Social", "color": "#E58FB0", "type": "custom", "active": true, "ownerId": "s1" },
+  { "id": "cat-gaming", "name": "Gaming", "color": "#6CC3D6", "type": "custom", "active": true, "ownerId": "s1" }
+]
+
+
