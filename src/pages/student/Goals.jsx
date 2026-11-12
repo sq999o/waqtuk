@@ -19,6 +19,7 @@ import {
 } from '../../utils/time';
 import { sumByCategory } from '../../utils/stats';
 import { goalProgress, goalMessage } from '../../utils/goals';
+import GoalFormModal from './goals/GoalFormModal';
 import './Goals.css';
 
 export default function Goals() {
@@ -28,13 +29,10 @@ export default function Goals() {
     getCategory,
   } = useData();
 
-  // Week navigation.
   const [weekStart, setWeekStart] = useState(
     () => startOfWeek(TODAY)
   );
 
-  // These states will be used by the form and
-  // confirmation dialog in the next implementation.
   const [formOpen, setFormOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -71,6 +69,11 @@ export default function Goals() {
   function openEditGoal(goal) {
     setSelectedGoal(goal);
     setFormOpen(true);
+  }
+
+  function closeGoalForm() {
+    setFormOpen(false);
+    setSelectedGoal(null);
   }
 
   function openDeleteGoal(goal) {
@@ -229,6 +232,13 @@ export default function Goals() {
           )}
         </Card>
       </div>
+
+      <GoalFormModal
+        open={formOpen}
+        onClose={closeGoalForm}
+        goal={selectedGoal}
+        defaultWeekStart={weekStart}
+      />
     </div>
   );
 }
