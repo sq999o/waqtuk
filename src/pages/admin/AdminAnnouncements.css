@@ -1,1 +1,41 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* AdminAnnouncements page, values from the prototype. Owner: Dev 2. */
+
+.wq-admin-announcements-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+/* Long titles wrap instead of widening the table (prototype: min-width 320px). */
+.wq-admin-announcements .wq-table {
+  min-width: 320px;
+}
+
+.wq-admin-announcements-actions,
+.wq-admin-announcements-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.wq-admin-announcements-buttons {
+  gap: 8px;
+}
+
+.wq-admin-announcements-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wq-admin-announcements-form textarea {
+  min-height: 120px;
+}
+
+@media (max-width: 820px) {
+  .wq-admin-announcements-grid {
+    grid-template-columns: 1fr;
+  }
+}
