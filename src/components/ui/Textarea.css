@@ -1,1 +1,50 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Textarea styles. Owner: Dev 2. */
+
+.wq-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.wq-textarea label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.wq-textarea textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 96px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.wq-textarea textarea:disabled {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.wq-textarea textarea[aria-invalid="true"] {
+  border-color: var(--err);
+}
+
+.wq-textarea-hint,
+.wq-textarea-error {
+  margin: 0;
+  font-size: 12px;
+}
+
+.wq-textarea-hint {
+  color: var(--muted);
+}
+
+.wq-textarea-error {
+  color: var(--err);
+}

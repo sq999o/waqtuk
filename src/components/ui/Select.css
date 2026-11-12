@@ -1,1 +1,42 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Select styles. Owner: Dev 2. */
+
+.wq-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.wq-select label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.wq-select select {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.wq-select select:disabled {
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.wq-select select[aria-invalid="true"] {
+  border-color: var(--err);
+}
+
+.wq-select-error {
+  margin: 0;
+  font-size: 12px;
+  color: var(--err);
+}
