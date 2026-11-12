@@ -1,1 +1,108 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-mentorgoal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+}
+
+.wq-mentorgoal-grid {
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  gap: 16px;
+}
+
+.wq-mentorgoal-shared-card,
+.wq-mentorgoal-guidance-card {
+  min-width: 0;
+}
+
+/* Shared goal */
+
+.wq-mentorgoal-shared-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wq-mentorgoal-period {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.wq-mentorgoal-progress-text {
+  margin: 0;
+  color: var(--muted-card);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Existing discussion */
+
+.wq-mentorgoal-discussion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wq-mentorgoal-section-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wq-mentorgoal-discussion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wq-mentorgoal-discussion-item {
+  padding: 12px;
+
+  background: var(--surface);
+  color: var(--muted-card);
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.wq-mentorgoal-discussion-author {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Comment form */
+
+.wq-mentorgoal-comment-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.wq-mentorgoal-comment-form > * {
+  max-width: 100%;
+}
+
+.wq-mentorgoal-comment-form > :first-child {
+  width: 100%;
+}
+
+/* Guidance placeholder */
+
+.wq-mentorgoal-guidance-placeholder {
+  min-height: 160px;
+}
