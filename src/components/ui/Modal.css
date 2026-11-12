@@ -1,1 +1,132 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 58%);
+  overscroll-behavior: contain;
+}
+
+.wq-modal *,
+.wq-modal *::before,
+.wq-modal *::after {
+  box-sizing: border-box;
+}
+
+.wq-modal__dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 20%);
+  outline: none;
+}
+
+.wq-modal--sm .wq-modal__dialog {
+  max-width: 420px;
+}
+
+.wq-modal__header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 16px;
+}
+
+.wq-modal__title {
+  min-width: 0;
+  margin: 0;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.wq-modal__close {
+  display: inline-grid;
+  flex: 0 0 36px;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.wq-modal__close:hover {
+  color: var(--text);
+  background: var(--muted-card);
+}
+
+.wq-modal__close:focus-visible,
+.wq-modal__dialog :focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.wq-modal__body {
+  min-height: 0;
+  padding: 0 24px 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.wq-modal__footer {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 820px) {
+  .wq-modal {
+    padding: 16px;
+  }
+
+  .wq-modal__dialog {
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+  }
+
+  .wq-modal__header {
+    padding: 16px 16px 12px;
+  }
+
+  .wq-modal__body {
+    padding: 0 16px 16px;
+  }
+
+  .wq-modal__footer {
+    padding: 12px 16px 16px;
+  }
+}
