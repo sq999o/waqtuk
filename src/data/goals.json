@@ -1,1 +1,75 @@
-[]
+
+[
+  {
+    "id": "g1",
+    "studentId": "s1",
+    "categoryId": "cat-study",
+    "weekStart": "2026-11-02",
+    "targetMinutes": 600,
+    "direction": "atLeast"
+  },
+  {
+    "id": "g2",
+    "studentId": "s1",
+    "categoryId": "cat-exercise",
+    "weekStart": "2026-11-02",
+    "targetMinutes": 300,
+    "direction": "atLeast"
+  },
+  {
+    "id": "g3",
+    "studentId": "s1",
+    "categoryId": "cat-social",
+    "weekStart": "2026-11-02",
+    "targetMinutes": 480,
+    "direction": "atMost"
+  },
+  {
+    "id": "g4",
+    "studentId": "s1",
+    "categoryId": "cat-gaming",
+    "weekStart": "2026-11-02",
+    "targetMinutes": 240,
+    "direction": "atMost"
+  },
+  {
+    "id": "g5",
+    "studentId": "s1",
+    "categoryId": "cat-reading",
+    "weekStart": "2026-10-26",
+    "targetMinutes": 120,
+    "direction": "atLeast"
+  },
+  {
+    "id": "g6",
+    "studentId": "s6",
+    "categoryId": "cat-study",
+    "weekStart": "2026-11-02",
+    "targetMinutes": 600,
+    "direction": "atLeast"
+  },
+  {
+    "id": "g7",
+    "studentId": "s2",
+    "categoryId": "cat-study",
+    "weekStart": "2026-10-26",
+    "targetMinutes": 600,
+    "direction": "atLeast"
+  },
+  {
+    "id": "g8",
+    "studentId": "s2",
+    "categoryId": "cat-exercise",
+    "weekStart": "2026-10-26",
+    "targetMinutes": 300,
+    "direction": "atLeast"
+  },
+  {
+    "id": "g9",
+    "studentId": "s3",
+    "categoryId": "cat-study",
+    "weekStart": "2026-11-02",
+    "targetMinutes": 600,
+    "direction": "atLeast"
+  }
+]

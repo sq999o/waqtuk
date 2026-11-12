@@ -1,1 +1,58 @@
-[]
+
+[
+  {
+    "id": "f1",
+    "goalId": "g1",
+    "mentorId": "m1",
+    "type": "comment",
+    "text": "Steady progress this week.",
+    "date": "2026-11-06",
+    "reported": true
+  },
+  {
+    "id": "f2",
+    "goalId": "g1",
+    "mentorId": "m1",
+    "type": "suggestion",
+    "text": "Consider an earlier study start.",
+    "date": "2026-11-05",
+    "reported": false,
+    "detail": "Consider moving some study hours earlier in the week to reduce late-day load."
+  },
+  {
+    "id": "f3",
+    "goalId": "g1",
+    "mentorId": "m1",
+    "type": "comment",
+    "text": "Nice goal consistency.",
+    "date": "2026-11-02",
+    "reported": false
+  },
+  {
+    "id": "f4",
+    "goalId": "g1",
+    "mentorId": "m2",
+    "type": "flag",
+    "text": "Workload looks unbalanced.",
+    "date": "2026-11-04",
+    "reported": false
+  },
+  {
+    "id": "f5",
+    "goalId": "g7",
+    "mentorId": "m1",
+    "type": "suggestion",
+    "text": "Consider spreading study sessions across the week.",
+    "date": "2026-11-05",
+    "reported": true
+  },
+  {
+    "id": "f6",
+    "goalId": "g9",
+    "mentorId": "m2",
+    "type": "flag",
+    "text": "Study activity may need review.",
+    "date": "2026-11-05",
+    "reported": true
+  }
+]
