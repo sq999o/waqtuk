@@ -1,1 +1,10 @@
-[]
+[
+  { "id": "n1", "title": "Final exams schedule published", "body": "The final exams schedule is now available on the university portal. Plan your study time early.", "audience": "students", "status": "published", "date": "2026-11-05" },
+  { "id": "n2", "title": "Library hours extended", "body": "The main library now stays open until midnight during the exam period.", "audience": "students", "status": "published", "date": "2026-11-01" },
+  { "id": "n3", "title": "Maintenance on Friday night", "body": "Waqtuk may be unavailable for a short time on Friday night. Your data is safe.", "audience": "students", "status": "published", "date": "2026-10-28" },
+  { "id": "n4", "title": "Announcement A", "body": "Mid-term feedback sessions open next week. Please review your shared students before then.", "audience": "mentors", "status": "published", "date": "2026-11-05" },
+  { "id": "n5", "title": "Announcement B", "body": "Weekly reports now include partial weeks. Check the covered dates on each report.", "audience": "mentors", "status": "published", "date": "2026-10-29" },
+  { "id": "n6", "title": "Announcement C", "body": "Scheduled maintenance on Friday night. The system may be unavailable for a short time.", "audience": "mentors", "status": "published", "date": "2026-10-20" },
+  { "id": "n7", "title": "Exam week study tips", "body": "Short tips for planning study blocks during exam week.", "audience": "students", "status": "draft", "date": "2026-11-06" },
+  { "id": "n8", "title": "Mentor survey", "body": "Tell us how mentor sharing works for you.", "audience": "all", "status": "unpublished", "date": "2026-10-15" }
+]
