@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
   Card,
+  Icon,
+  Modal,
   PageHeader,
   ProgressBar,
   Textarea,
@@ -23,6 +25,9 @@ import {
   goalMessage,
 } from '../../utils/goals';
 import './MentorGoal.css';
+
+const ACCESS_ERROR =
+  'Permission withdrawn: you no longer have access to this goal.';
 
 function formatApprovedRange(from, to) {
   if (!from || !to) return '';
@@ -58,21 +63,32 @@ function getProgressTone(status) {
 export default function MentorGoal() {
   const { id: goalId } = useParams();
 
-const {
-  sharedStudents = [],
-  getSharedData,
-  currentUser,
-  feedback = [],
-  getCategory,
-  addFeedback,
-} = useData();
+  const {
+    sharedStudents = [],
+    getSharedData,
+    currentUser,
+    feedback = [],
+    getCategory,
+    addFeedback,
+  } = useData();
 
   const toast = useToast();
+
+  const suggestionFormId = useId();
+  const flagFormId = useId();
 
   const [comment, setComment] = useState('');
   const [commentError, setCommentError] = useState('');
 
-  // Locate an accepted sharing request that includes this goal.
+  const [suggestionOpen, setSuggestionOpen] = useState(false);
+  const [suggestionText, setSuggestionText] = useState('');
+  const [suggestionError, setSuggestionError] = useState('');
+
+  const [flagOpen, setFlagOpen] = useState(false);
+  const [flagText, setFlagText] = useState('');
+  const [flagError, setFlagError] = useState('');
+
+  // Find an accepted sharing request containing this goal.
   const sharedEntry = sharedStudents.find(
     (item) => item.request.goalIds.includes(goalId)
   );
@@ -87,8 +103,6 @@ const {
   const student = sharedData?.student;
   const activities = sharedData?.activities ?? [];
 
-  // Confirm that the goal is actually present
-  // in the approved, filtered sharing data.
   const goal = sharedData?.goals?.find(
     (item) => item.id === goalId
   );
@@ -99,7 +113,8 @@ const {
     ? getCategory?.(goal.categoryId)
     : null;
 
-  const categoryName = category?.name ?? goal?.categoryId ?? '';
+  const categoryName =
+    category?.name ?? goal?.categoryId ?? '';
 
   const totals = goal
     ? sumByCategory(
@@ -117,8 +132,8 @@ const {
     ? goalProgress(goal, logged)
     : null;
 
-  // Only this mentor's visible feedback for this goal.
-  // Sorting happens on a filtered copy, not the source.
+  // Only this mentor's visible feedback on this goal.
+  // Filter and sort create a new array.
   const discussion = feedback
     .filter(
       (item) =>
@@ -132,10 +147,33 @@ const {
     document.title = 'Goal feedback · Waqtuk';
   }, []);
 
+  // Reset all local forms when navigating to another goal.
   useEffect(() => {
     setComment('');
     setCommentError('');
+    setSuggestionOpen(false);
+    setFlagOpen(false);
+    setSuggestionText('');
+    setFlagText('');
+    setSuggestionError('');
+    setFlagError('');
   }, [goalId]);
+
+  // Reset suggestion form each time it opens.
+  useEffect(() => {
+    if (!suggestionOpen) return;
+
+    setSuggestionText('');
+    setSuggestionError('');
+  }, [suggestionOpen]);
+
+  // Reset flag form each time it opens.
+  useEffect(() => {
+    if (!flagOpen) return;
+
+    setFlagText('');
+    setFlagError('');
+  }, [flagOpen]);
 
   function handlePostComment() {
     if (!hasAccess) return;
@@ -156,6 +194,74 @@ const {
     toast.show('Comment posted.');
   }
 
+  function openSuggestion() {
+    setSuggestionText('');
+    setSuggestionError('');
+    setSuggestionOpen(true);
+  }
+
+  function closeSuggestion() {
+    setSuggestionOpen(false);
+    setSuggestionError('');
+  }
+
+  function openFlag() {
+    setFlagText('');
+    setFlagError('');
+    setFlagOpen(true);
+  }
+
+  function closeFlag() {
+    setFlagOpen(false);
+    setFlagError('');
+  }
+
+  function handleSendSuggestion(event) {
+    event.preventDefault();
+
+    if (!hasAccess) {
+      setSuggestionError(ACCESS_ERROR);
+      return;
+    }
+
+    const result = addFeedback({
+      goalId,
+      type: 'suggestion',
+      text: suggestionText,
+    });
+
+    if (!result.ok) {
+      setSuggestionError(result.error);
+      return;
+    }
+
+    closeSuggestion();
+    toast.show('Suggestion sent.');
+  }
+
+  function handleSubmitFlag(event) {
+    event.preventDefault();
+
+    if (!hasAccess) {
+      setFlagError(ACCESS_ERROR);
+      return;
+    }
+
+    const result = addFeedback({
+      goalId,
+      type: 'flag',
+      text: flagText,
+    });
+
+    if (!result.ok) {
+      setFlagError(result.error);
+      return;
+    }
+
+    closeFlag();
+    toast.show('Flag submitted.');
+  }
+
   const scopeParts = [];
 
   if (request?.scope?.includes('summary')) {
@@ -174,7 +280,7 @@ const {
     return (
       <div className="wq-mentorgoal">
         <Alert tone="danger">
-          Permission withdrawn: you no longer have access to this goal.
+          {ACCESS_ERROR}
         </Alert>
       </div>
     );
@@ -269,10 +375,151 @@ const {
           title="Guidance actions"
           className="wq-mentorgoal-guidance-card"
         >
-          {/* Guidance actions will be implemented next. */}
-          <div className="wq-mentorgoal-guidance-placeholder" />
+          <div className="wq-mentorgoal-guidance-content">
+            <div className="wq-mentorgoal-guidance-buttons">
+              <Button
+                variant="primary"
+                iconLeft={<Icon name="plus" />}
+                onClick={openSuggestion}
+              >
+                Suggest Adjustment
+              </Button>
+
+              <Button
+                variant="secondary"
+                iconLeft={<Icon name="flag" />}
+                onClick={openFlag}
+              >
+                Flag Imbalance
+              </Button>
+            </div>
+
+            <Alert tone="info">
+              Mentor feedback cannot change student records.
+              Only the student can edit goals or activities.
+            </Alert>
+
+            <Alert tone="info">
+              Comments, suggestions and flags appear on the
+              student's Mentor feedback page.
+            </Alert>
+          </div>
         </Card>
       </div>
+
+      {/* Suggest Adjustment modal */}
+      <Modal
+        open={suggestionOpen}
+        title="Suggest adjustment"
+        onClose={closeSuggestion}
+        size="sm"
+        className="wq-mentorgoal-suggestion-modal"
+        footer={
+          <>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={closeSuggestion}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              form={suggestionFormId}
+            >
+              Send
+            </Button>
+          </>
+        }
+      >
+        <form
+          id={suggestionFormId}
+          className="wq-mentorgoal-modal-form"
+          onSubmit={handleSendSuggestion}
+          noValidate
+        >
+          <Textarea
+            label="Advice *"
+            name="suggestion"
+            value={suggestionText}
+            onChange={(event) => {
+              setSuggestionText(event.target.value);
+              setSuggestionError('');
+            }}
+            placeholder="Write your advice..."
+            rows={4}
+            error={
+              suggestionError === ACCESS_ERROR
+                ? undefined
+                : suggestionError
+            }
+          />
+
+          {suggestionError === ACCESS_ERROR && (
+            <Alert tone="danger">
+              {suggestionError}
+            </Alert>
+          )}
+        </form>
+      </Modal>
+
+      {/* Flag Imbalance modal */}
+      <Modal
+        open={flagOpen}
+        title="Flag imbalance"
+        onClose={closeFlag}
+        size="sm"
+        className="wq-mentorgoal-flag-modal"
+        footer={
+          <>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={closeFlag}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              form={flagFormId}
+            >
+              Submit Flag
+            </Button>
+          </>
+        }
+      >
+        <form
+          id={flagFormId}
+          className="wq-mentorgoal-modal-form"
+          onSubmit={handleSubmitFlag}
+          noValidate
+        >
+          <Textarea
+            label="Explanation *"
+            name="flag"
+            value={flagText}
+            onChange={(event) => {
+              setFlagText(event.target.value);
+              setFlagError('');
+            }}
+            placeholder="Explain the concern..."
+            rows={4}
+            error={
+              flagError === ACCESS_ERROR
+                ? undefined
+                : flagError
+            }
+          />
+
+          {flagError === ACCESS_ERROR && (
+            <Alert tone="danger">
+              {flagError}
+            </Alert>
+          )}
+        </form>
+      </Modal>
     </div>
   );
 }
