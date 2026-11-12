@@ -15,20 +15,22 @@ import {
 import { DonutChart } from '../../components/charts';
 import { useData } from '../../context/DataContext';
 import {
+  TODAY,
+  addDays,
+  startOfWeek,
+  endOfWeek,
   formatDateShort,
+  formatDateLong,
   formatDuration,
   formatHours,
-  endOfWeek,
 } from '../../utils/time';
 import {
   sumByCategory,
   totalMinutes,
   percentages,
+  topCategoryId,
 } from '../../utils/stats';
-import {
-  goalProgress,
-  goalMessage,
-} from '../../utils/goals';
+import { goalProgress, goalMessage } from '../../utils/goals';
 import './MentorStudent.css';
 
 function formatApprovedRange(from, to) {
@@ -59,6 +61,45 @@ function progressTone(status) {
   return 'primary';
 }
 
+function shortWeekDate(date) {
+  return formatDateLong(date).replace(/\s+\d{4}$/, '');
+}
+
+function makeWeeklyReports(from, to) {
+  const currentWeek = startOfWeek(TODAY);
+
+  return [0, -1, -2].map((offset) => {
+    const weekStart = addDays(currentWeek, offset * 7);
+    const weekEnd = endOfWeek(weekStart);
+
+    const coveredFrom = from > weekStart ? from : weekStart;
+    const coveredTo = to < weekEnd ? to : weekEnd;
+
+    const covered = coveredFrom <= coveredTo;
+    const fullWeek =
+      covered &&
+      coveredFrom === weekStart &&
+      coveredTo === weekEnd;
+
+    const title = `Week of ${shortWeekDate(weekStart)} (${
+      fullWeek ? 'full week' : 'partial week'
+    })`;
+
+    return {
+      id: weekStart,
+      weekStart,
+      weekEnd,
+      covered,
+      coveredFrom: covered ? coveredFrom : null,
+      coveredTo: covered ? coveredTo : null,
+      title,
+      coveredLabel: covered
+        ? `${formatDateShort(coveredFrom)} – ${formatDateShort(coveredTo)}`
+        : 'Not in approved range',
+    };
+  });
+}
+
 export default function MentorStudent() {
   const { id: requestId } = useParams();
   const navigate = useNavigate();
@@ -67,6 +108,7 @@ export default function MentorStudent() {
     sharedStudents = [],
     getSharedData,
     getCategory,
+    categories = [],
   } = useData();
 
   const sharedEntry = sharedStudents.find(
@@ -95,6 +137,7 @@ export default function MentorStudent() {
   });
 
   const [rangeError, setRangeError] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState(null);
 
   useEffect(() => {
     setViewFrom(request?.from ?? '');
@@ -106,6 +149,7 @@ export default function MentorStudent() {
     });
 
     setRangeError('');
+    setSelectedWeek(null);
   }, [requestId, request?.from, request?.to]);
 
   useEffect(() => {
@@ -153,8 +197,6 @@ export default function MentorStudent() {
     });
   }
 
-  // These activities have already been restricted
-  // to the approved dates by getSharedData().
   const visibleActivities = activities.filter((activity) => {
     const date = activity.start.slice(0, 10);
 
@@ -166,11 +208,12 @@ export default function MentorStudent() {
 
   const scope = request?.scope ?? [];
   const showSummary = scope.includes('summary');
+  const showReports = scope.includes('reports');
 
   const scopeParts = [];
 
-  if (scope.includes('summary')) scopeParts.push('Summary');
-  if (scope.includes('reports')) scopeParts.push('Reports');
+  if (showSummary) scopeParts.push('Summary');
+  if (showReports) scopeParts.push('Reports');
 
   goals.forEach((goal) => {
     scopeParts.push(`goal ${formatGoalScope(goal, getCategory)}`);
@@ -178,7 +221,7 @@ export default function MentorStudent() {
 
   const scopeDescription = scopeParts.join(', ');
 
-  // Category totals for the applied date range.
+  // Summary calculations use only approved activities.
   const totalsByCategory = sumByCategory(
     activities,
     appliedRange.from,
@@ -243,22 +286,18 @@ export default function MentorStudent() {
       header: 'Time',
       align: 'right',
       render: (row) =>
-        row.isTotal ? (
-          <strong>{formatDuration(row.minutes)}</strong>
-        ) : (
-          formatDuration(row.minutes)
-        ),
+        row.isTotal
+          ? <strong>{formatDuration(row.minutes)}</strong>
+          : formatDuration(row.minutes),
     },
     {
       key: 'share',
       header: 'Share',
       align: 'right',
       render: (row) =>
-        row.isTotal ? (
-          <strong>{row.share}%</strong>
-        ) : (
-          `${row.share}%`
-        ),
+        row.isTotal
+          ? <strong>{row.share}%</strong>
+          : `${row.share}%`,
     },
   ];
 
@@ -269,8 +308,6 @@ export default function MentorStudent() {
     color: item.color,
   }));
 
-  // Each shared goal uses its own week.
-  // Never read activities outside getSharedData().
   const goalRows = goals.map((goal) => {
     const goalTotals = sumByCategory(
       activities,
@@ -289,6 +326,84 @@ export default function MentorStudent() {
         goal.categoryId,
     };
   });
+
+  // Weekly reports are limited to three weeks and
+  // to the approved sharing range.
+  const weeklyReports = request
+    ? makeWeeklyReports(request.from, request.to)
+    : [];
+
+  const selectedReport =
+    weeklyReports.find(
+      (report) =>
+        report.id === selectedWeek &&
+        report.covered
+    ) ??
+    weeklyReports.find((report) => report.covered) ??
+    null;
+
+  const reportTotals = selectedReport
+    ? sumByCategory(
+        activities,
+        selectedReport.coveredFrom,
+        selectedReport.coveredTo
+      )
+    : {};
+
+  const reportTotal = selectedReport
+    ? totalMinutes(
+        activities,
+        selectedReport.coveredFrom,
+        selectedReport.coveredTo
+      )
+    : 0;
+
+  const topId = selectedReport
+    ? topCategoryId(reportTotals, categories)
+    : null;
+
+  const topName = topId
+    ? getCategory?.(topId)?.name ?? topId
+    : '—';
+
+  const reportGoals = selectedReport
+    ? goals.filter(
+        (goal) => goal.weekStart === selectedReport.weekStart
+      )
+    : [];
+
+  const reportColumns = [
+    {
+      key: 'title',
+      header: 'Report',
+      render: (row) => (
+        <span
+          className={
+            row.covered
+              ? 'wq-mentorstudent-report-name'
+              : 'wq-mentorstudent-report-unavailable'
+          }
+        >
+          {row.title}
+        </span>
+      ),
+    },
+    {
+      key: 'coveredLabel',
+      header: 'Covered dates',
+      render: (row) => (
+        <span
+          className={
+            row.covered
+              ? 'wq-mentorstudent-report-dates'
+              : 'wq-mentorstudent-report-unavailable'
+          }
+        >
+          {row.coveredLabel}
+        </span>
+      ),
+    },
+  ];
 
   if (!hasAccess) {
     return (
@@ -313,7 +428,9 @@ export default function MentorStudent() {
             label="Shared student"
             name="sharedStudent"
             value={requestId}
-            onChange={handleStudentChange}
+            onChange={(event) =>
+              handleStudentChange(event)
+            }
             options={studentOptions}
           />
 
@@ -321,7 +438,6 @@ export default function MentorStudent() {
             <span className="wq-mentorstudent-field-label">
               Approved range
             </span>
-
             <div className="wq-mentorstudent-readonly-value">
               {formatApprovedRange(request.from, request.to)}
             </div>
@@ -382,10 +498,7 @@ export default function MentorStudent() {
       <div className="wq-mentorstudent-summary-grid wq-g">
         {showSummary && (
           <>
-            <Card
-              title="Category totals"
-              className="wq-mentorstudent-totals-card"
-            >
+            <Card title="Category totals">
               <Table
                 columns={tableColumns}
                 rows={tableRows}
@@ -394,10 +507,7 @@ export default function MentorStudent() {
               />
             </Card>
 
-            <Card
-              title="Time distribution"
-              className="wq-mentorstudent-distribution-card"
-            >
+            <Card title="Time distribution">
               <DonutChart
                 segments={donutSegments}
                 centerValue={formatDuration(total)}
@@ -408,10 +518,7 @@ export default function MentorStudent() {
         )}
 
         {goals.length > 0 && (
-          <Card
-            title="Shared goal progress"
-            className="wq-mentorstudent-goals-card"
-          >
+          <Card title="Shared goal progress">
             <div className="wq-mentorstudent-goals-list">
               {goalRows.map(({ goal, logged, progress, name }) => (
                 <div
@@ -459,6 +566,73 @@ export default function MentorStudent() {
           </Card>
         )}
       </div>
+
+      {showReports ? (
+        <Card
+          title="Weekly reports"
+          className="wq-mentorstudent-reports-card"
+        >
+          <div className="wq-mentorstudent-reports-grid wq-g">
+            <div className="wq-mentorstudent-reports-list">
+              <Table
+                columns={reportColumns}
+                rows={weeklyReports}
+                rowKey="id"
+                onRowClick={(row) => {
+                  if (row.covered) {
+                    setSelectedWeek(row.id);
+                  }
+                }}
+              />
+            </div>
+
+            <div className="wq-mentorstudent-report-detail">
+              {selectedReport ? (
+                <>
+                  <h3 className="wq-mentorstudent-report-title">
+                    {selectedReport.title}
+                  </h3>
+
+                  <p>
+                    <strong>Total time:</strong>{' '}
+                    {formatDuration(reportTotal)}
+                  </p>
+
+                  <p>
+                    <strong>Top category:</strong>{' '}
+                    {topName}
+                  </p>
+
+                  {reportGoals.map((goal) => {
+                    const name =
+                      getCategory?.(goal.categoryId)?.name ??
+                      goal.categoryId;
+
+                    const logged =
+                      reportTotals[goal.categoryId] ?? 0;
+
+                    return (
+                      <p key={goal.id}>
+                        <strong>Goal {name}:</strong>{' '}
+                        {formatHours(logged)} /{' '}
+                        {formatHours(goal.targetMinutes)}
+                      </p>
+                    );
+                  })}
+                </>
+              ) : (
+                <p className="wq-mentorstudent-report-unavailable">
+                  Not in approved range
+                </p>
+              )}
+            </div>
+          </div>
+        </Card>
+      ) : (
+        <Alert tone="info">
+          Weekly reports were not included in the approved scope.
+        </Alert>
+      )}
     </div>
   );
 }

@@ -12,8 +12,6 @@
   min-width: 0;
 }
 
-/* Access controls */
-
 .wq-mentorstudent-fields {
   width: 100%;
   min-width: 0;
@@ -42,12 +40,10 @@
   align-items: center;
   min-height: 44px;
   padding: 0 12px;
-
   background: var(--surface);
   color: var(--muted-card);
   border: 1px solid var(--border);
   border-radius: 10px;
-
   font-size: 14px;
   line-height: 1.5;
 }
@@ -76,14 +72,6 @@
   gap: 16px;
 }
 
-.wq-mentorstudent-totals-card,
-.wq-mentorstudent-distribution-card,
-.wq-mentorstudent-goals-card {
-  min-width: 0;
-}
-
-/* Category totals */
-
 .wq-mentorstudent-category {
   display: inline-flex;
   align-items: center;
@@ -95,7 +83,7 @@
   overflow-wrap: anywhere;
 }
 
-/* Shared goal progress */
+/* Shared goals */
 
 .wq-mentorstudent-goals-list {
   display: flex;
@@ -140,9 +128,72 @@
   margin-top: 16px;
 }
 
-/* General wrapping */
+/* Weekly reports */
+
+.wq-mentorstudent-reports-card {
+  min-width: 0;
+}
+
+.wq-mentorstudent-reports-grid {
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  gap: 16px;
+}
+
+.wq-mentorstudent-reports-list {
+  min-width: 0;
+}
+
+.wq-mentorstudent-report-name {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.wq-mentorstudent-report-dates {
+  color: var(--muted-card);
+  white-space: nowrap;
+}
+
+.wq-mentorstudent-report-unavailable {
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.wq-mentorstudent-report-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 16px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.wq-mentorstudent-report-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-report-detail p {
+  margin: 0;
+  color: var(--muted-card);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-report-detail strong {
+  color: var(--text);
+  font-weight: 600;
+}
 
 .wq-mentorstudent-readonly-value,
-.wq-mentorstudent-scope {
+.wq-mentorstudent-scope,
+.wq-mentorstudent-report-detail {
   overflow-wrap: anywhere;
 }
