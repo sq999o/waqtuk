@@ -5,17 +5,9 @@ import { MESSAGES } from '../../utils/validators';
 
 /**
  * Add feedback to a student's goal.
- *
- * Only a mentor with an accepted sharing request
- * that includes the goal can add feedback.
- *
- * @param {Object} data - Complete application data.
- * @param {Object} payload - { goalId, type, text }
- * @param {Object} ctx - Context containing currentUser.
- * @returns {{ data: Object, result: Object }}
  */
 export function addFeedback(data, { goalId, type, text }, ctx) {
-  // 1. Validate the feedback text.
+  // 1. Validate feedback text.
   const trimmedText = String(text ?? '').trim();
 
   if (!trimmedText) {
@@ -34,7 +26,7 @@ export function addFeedback(data, { goalId, type, text }, ctx) {
     };
   }
 
-  // 2. Verify that the mentor has permission.
+  // 2. Verify mentor access.
   const mentorId = ctx.currentUser?.id;
 
   const hasAccess = data.sharingRequests.some(
@@ -54,7 +46,7 @@ export function addFeedback(data, { goalId, type, text }, ctx) {
     };
   }
 
-  // 3. Create the feedback record.
+  // 3. Create feedback.
   const feedback = {
     id: makeId('f'),
     goalId,
@@ -65,7 +57,6 @@ export function addFeedback(data, { goalId, type, text }, ctx) {
     reported: false,
   };
 
-  // 4. Return a new data object without mutation.
   return {
     data: {
       ...data,
@@ -79,17 +70,10 @@ export function addFeedback(data, { goalId, type, text }, ctx) {
 }
 
 /**
- * Report a feedback item as the signed-in student.
- *
- * @param {Object} data - Complete application data.
- * @param {string} id - Feedback ID.
- * @param {string} reason - Report reason.
- * @param {string} details - Optional explanation.
- * @param {Object} ctx - Context containing currentUser.
- * @returns {{ data: Object, result: Object }}
+ * Report feedback as the signed-in student.
  */
 export function reportFeedback(data, id, reason, details, ctx) {
-  // 1. Validate the report reason.
+  // 1. Validate reason.
   const trimmedReason = String(reason ?? '').trim();
 
   if (!trimmedReason) {
@@ -102,14 +86,14 @@ export function reportFeedback(data, id, reason, details, ctx) {
     };
   }
 
-  // 2. Find the feedback item.
+  // 2. Find feedback.
   const feedbackItem = data.feedback.find(
     (item) => item.id === id
   );
 
   const studentId = ctx.currentUser?.id;
 
-  // 3. Verify that its goal belongs to this student.
+  // 3. Verify goal ownership.
   const ownsGoal = data.goals.some(
     (goal) =>
       goal.id === feedbackItem?.goalId &&
@@ -126,7 +110,7 @@ export function reportFeedback(data, id, reason, details, ctx) {
     };
   }
 
-  // 4. Prevent duplicate unresolved reports.
+  // 4. Prevent duplicate pending reports.
   const existingReport = data.contentReports.some(
     (report) =>
       report.feedbackId === id &&
@@ -144,7 +128,7 @@ export function reportFeedback(data, id, reason, details, ctx) {
     };
   }
 
-  // 5. Create the new content report.
+  // 5. Create report.
   const newReport = {
     id: makeId('c'),
     feedbackId: id,
@@ -156,14 +140,13 @@ export function reportFeedback(data, id, reason, details, ctx) {
     date: TODAY,
   };
 
-  // 6. Mark the reported feedback item.
+  // 6. Mark feedback as reported.
   const updatedFeedback = data.feedback.map((item) =>
     item.id === id
       ? { ...item, reported: true }
       : item
   );
 
-  // 7. Return new data without changing the old data.
   return {
     data: {
       ...data,
@@ -180,14 +163,143 @@ export function reportFeedback(data, id, reason, details, ctx) {
 }
 
 /**
- * Temporary placeholder until moderation logic is implemented.
+ * Decide a content moderation report as an administrator.
+ *
+ * Dismissed:
+ * - Closes only the selected report.
+ *
+ * Removed:
+ * - Marks the feedback as removed.
+ * - Closes all pending reports for the same feedback.
+ *
+ * @param {Object} data - Complete application data.
+ * @param {string} id - Content report ID.
+ * @param {'dismissed'|'removed'} decision
+ * @param {string} reason - Administrator's explanation.
+ * @param {Object} ctx - Context containing currentUser.
+ * @returns {{ data: Object, result: Object }}
  */
 export function decideReport(data, id, decision, reason, ctx) {
+  // 1. Validate the decision reason.
+  const trimmedReason = String(reason ?? '').trim();
+
+  if (!trimmedReason) {
+    return {
+      data,
+      result: {
+        ok: false,
+        error: MESSAGES.decisionReasonRequired,
+      },
+    };
+  }
+
+  // 2. Find the report.
+  const report = data.contentReports.find(
+    (item) => item.id === id
+  );
+
+  if (!report) {
+    return {
+      data,
+      result: {
+        ok: false,
+        error: 'Report not found.',
+      },
+    };
+  }
+
+  // 3. Check whether another administrator handled it.
+  if (report.status !== 'pending') {
+    return {
+      data,
+      result: {
+        ok: false,
+        error: MESSAGES.reportAlreadyHandled,
+      },
+    };
+  }
+
+  // 4. Check whether content was already removed.
+  const feedbackItem = data.feedback.find(
+    (item) => item.id === report.feedbackId
+  );
+
+  if (
+    decision === 'removed' &&
+    feedbackItem?.removed === true
+  ) {
+    return {
+      data,
+      result: {
+        ok: false,
+        error: MESSAGES.contentAlreadyRemoved,
+      },
+    };
+  }
+
+  // 5. Dismiss only the selected report.
+  if (decision === 'dismissed') {
+    const updatedReports = data.contentReports.map(
+      (item) =>
+        item.id === id
+          ? {
+              ...item,
+              status: 'dismissed',
+              decisionReason: trimmedReason,
+            }
+          : item
+    );
+
+    return {
+      data: {
+        ...data,
+        contentReports: updatedReports,
+      },
+      result: {
+        ok: true,
+      },
+    };
+  }
+
+  // 6. Remove the content and close related pending reports.
+  if (decision === 'removed') {
+    const updatedFeedback = data.feedback.map(
+      (item) =>
+        item.id === report.feedbackId
+          ? { ...item, removed: true }
+          : item
+    );
+
+    const updatedReports = data.contentReports.map(
+      (item) =>
+        item.feedbackId === report.feedbackId &&
+        item.status === 'pending'
+          ? {
+              ...item,
+              status: 'removed',
+              decisionReason: trimmedReason,
+            }
+          : item
+    );
+
+    return {
+      data: {
+        ...data,
+        feedback: updatedFeedback,
+        contentReports: updatedReports,
+      },
+      result: {
+        ok: true,
+      },
+    };
+  }
+
+  // Reject unsupported decisions without changing data.
   return {
     data,
     result: {
       ok: false,
-      error: 'Report decision not implemented yet.',
+      error: 'Invalid report decision.',
     },
   };
 }
