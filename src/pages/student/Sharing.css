@@ -1,1 +1,25 @@
-/* Phase 0 placeholder. Owner: Dev 4. */
+.wq-sharing-page { color: var(--text); font-size: 14px; min-width: 0; }
+.wq-sharing-header { margin-bottom: 24px; }
+.wq-sharing-header h1 { margin: 0 0 8px; font-size: 24px; font-weight: 600; }
+.wq-sharing-header p { margin: 0; color: var(--muted); line-height: 1.5; }
+.wq-sharing-grid, .wq-sharing-dates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.wq-sharing-card { min-width: 0; padding: 24px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg); }
+.wq-sharing-card > header h2 { margin: 0 0 16px; font-size: 14px; font-weight: 600; }
+.wq-sharing-form, .wq-sharing-requests { display: grid; gap: 16px; }
+.wq-sharing-form .wq-select { display: grid; gap: 8px; min-width: 0; }
+.wq-sharing-form .wq-select > label { font-size: 14px; font-weight: 500; }
+.wq-sharing-form select { width: 100%; min-width: 0; height: 44px; border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; background: var(--bg); color: var(--text); }
+.wq-sharing-fields { min-width: 0; padding: 0; margin: 0; border: 0; }
+.wq-sharing-fields legend { padding: 0; margin-bottom: 12px; font-weight: 500; }
+.wq-sharing-scopes, .wq-sharing-buttons { display: flex; flex-wrap: wrap; gap: 16px; }
+.wq-sharing-goals { display: grid; gap: 12px; }
+.wq-sharing-fields .wq-checkbox { display: flex; align-items: center; gap: 8px; line-height: 1.5; }
+.wq-sharing-fields input[type="checkbox"] { flex-shrink: 0; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
+.wq-sharing-alert { padding: 16px; border-radius: 16px; line-height: 1.5; background: var(--blue); color: var(--blue-text); overflow-wrap: anywhere; }
+.wq-sharing-alert--danger { background: var(--err-bg); color: var(--err); }
+.wq-sharing-alert--success { background: var(--ok-bg); color: var(--ok); }
+.wq-sharing-request { min-width: 0; padding: 16px; border-radius: 16px; background: var(--surface); overflow-wrap: anywhere; }
+.wq-sharing-request-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+.wq-sharing-request h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.wq-sharing-request p, .wq-sharing-muted { margin: 0 0 8px; color: var(--muted); line-height: 1.5; }
+.wq-sharing-page .wq-button { max-width: 100%; white-space: normal; height: auto; min-height: 44px; padding-block: 8px; }

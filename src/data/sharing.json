@@ -1,1 +1,9 @@
-[]
+[
+  { "id": "r1", "studentId": "s1", "mentorId": "m1", "from": "2026-11-02", "to": "2026-11-08", "scope": ["summary", "reports"], "goalIds": ["g1"], "status": "accepted" },
+  { "id": "r2", "studentId": "s1", "mentorId": "m2", "from": "2026-11-02", "to": "2026-11-08", "scope": ["summary", "reports"], "goalIds": ["g1"], "status": "pending" },
+  { "id": "r3", "studentId": "s2", "mentorId": "m1", "from": "2026-10-26", "to": "2026-11-01", "scope": ["summary", "reports"], "goalIds": ["g7", "g8"], "status": "accepted", "decidedOn": "2026-10-28" },
+  { "id": "r4", "studentId": "s3", "mentorId": "m1", "from": "2026-11-02", "to": "2026-11-08", "scope": ["summary"], "goalIds": [], "status": "accepted", "decidedOn": "2026-10-26" },
+  { "id": "r5", "studentId": "s5", "mentorId": "m1", "from": "2026-11-02", "to": "2026-11-08", "scope": ["reports"], "goalIds": [], "status": "declined", "decidedOn": "2026-10-24" },
+  { "id": "r6", "studentId": "s4", "mentorId": "m1", "from": "2026-11-02", "to": "2026-11-08", "scope": ["summary"], "goalIds": [], "status": "pending" },
+  { "id": "r7", "studentId": "s6", "mentorId": "m1", "from": "2026-11-02", "to": "2026-11-08", "scope": ["summary", "reports"], "goalIds": ["g6"], "status": "pending" }
+]
