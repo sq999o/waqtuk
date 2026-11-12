@@ -1,1 +1,64 @@
-/* Phase 0 placeholder. Layout owner adds styling. */
+/* AuthLayout styles, values from the prototype Log in page. Owner: Dev 2. */
+
+.wq-authlayout {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wq-authlayout-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.wq-authlayout-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+}
+
+.wq-authlayout-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.wq-authlayout-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.wq-authlayout-theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.wq-authlayout-theme:hover {
+  background: var(--surface-2);
+}
+
+@media (max-width: 820px) {
+  .wq-authlayout-top {
+    padding: 0 20px;
+  }
+}
