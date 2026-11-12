@@ -1,1 +1,7 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Icon styles. Owner: Dev 2. */
+
+.wq-icon {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+}

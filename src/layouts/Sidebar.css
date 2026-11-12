@@ -1,1 +1,129 @@
-/* Phase 0 placeholder. Layout owner adds styling. */
+/* Sidebar styles, values from the prototype. Owner: Dev 2. */
+
+.wq-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 100%;
+  padding: 20px 16px;
+  box-sizing: border-box;
+}
+
+.wq-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+}
+
+.wq-sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.wq-sidebar-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.wq-sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.wq-sidebar-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--lav);
+  color: var(--lav-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.wq-sidebar-user-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.wq-sidebar-user-name {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wq-sidebar-user-role {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.wq-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wq-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wq-sidebar-title {
+  padding: 0 12px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.wq-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.wq-sidebar-link:hover {
+  background: var(--surface-2);
+}
+
+.wq-sidebar-link--active {
+  background: var(--surface-2);
+  font-weight: 600;
+}
+
+.wq-sidebar-foot {
+  margin-top: auto;
+  padding: 0 4px;
+}
+
+.wq-sidebar-logout {
+  color: var(--muted);
+}
