@@ -18,7 +18,17 @@ export const messages = {
   accountDetailsSaved: 'Account details saved.',
   accountReasonRequired: 'Reason is required.',
   accountAlreadySuspended: 'Invalid status change: this account is already suspended.',
+  // Sharing states: design/reference.pdf pages 30 and 34.
+  sharingInvalidRange: 'Invalid request: end date must be on or after the start date.',
+  sharingDuplicate: 'A pending or accepted request already exists for this mentor.',
+  sharingUnavailable: 'This request is no longer available. It was cancelled or replaced by the student.',
+  sharingSent: 'Request sent. Status: Pending.',
   // Defensive cases not illustrated in the prototype states.
+  sharingDatesRequired: 'Enter valid start and end dates.',
+  sharingMentorUnavailable: 'Choose an active academic mentor.',
+  sharingInvalidSelection: 'Choose valid information and goals to share.',
+  sharingInvalidGoals: 'Choose your own goals from the week of the start date.',
+  sharingEmptySelection: 'Choose information or at least one goal to share.',
   accountAlreadyActive: 'Invalid status change: this account is already active.',
   accountInvalidStatus: 'Choose Active or Suspended.',
   accountInvalidRole: 'Choose Student or Academic Mentor.',
