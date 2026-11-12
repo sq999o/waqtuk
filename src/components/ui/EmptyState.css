@@ -1,1 +1,13 @@
-/* Phase 0 placeholder. Owner: Dev 4. */
+.wq-empty-state {
+  min-width: 0;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.wq-empty-state-title { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.wq-empty-state-message { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.wq-empty-state-title + .wq-empty-state-message { margin-top: 8px; }
+.wq-empty-state-action { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.wq-empty-state-action > * { max-width: 100%; }
