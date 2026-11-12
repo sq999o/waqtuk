@@ -25,11 +25,70 @@ export default function AppShell() {
 
   // Close the mobile drawer when the route changes.
   useEffect(() => {
-    if (previousPathRef.current !== location.pathname) {
+    if (
+      previousPathRef.current !== location.pathname ||
+      drawerOpen
+    ) {
       previousPathRef.current = location.pathname;
       setDrawerOpen(false);
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
+
+  // Scroll to the URL hash, or return to the top.
+  useEffect(() => {
+    const hash = location.hash;
+
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return undefined;
+    }
+
+    let cancelled = false;
+    let attempts = 0;
+    let timeoutId;
+
+    const maxAttempts = 10;
+    const retryDelay = 100;
+
+    function scrollToHash() {
+      if (cancelled) return;
+
+      let id;
+
+      try {
+        id = decodeURIComponent(hash.slice(1));
+      } catch {
+        id = hash.slice(1);
+      }
+
+      const target = document.getElementById(id);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+        return;
+      }
+
+      attempts += 1;
+
+      if (attempts < maxAttempts) {
+        timeoutId = window.setTimeout(
+          scrollToHash,
+          retryDelay
+        );
+      }
+    }
+
+    // Let the destination page finish its initial render.
+    timeoutId = window.setTimeout(scrollToHash, 0);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [location.pathname, location.hash, location.key]);
 
   // Escape closes the drawer.
   useEffect(() => {
