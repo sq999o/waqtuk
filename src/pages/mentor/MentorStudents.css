@@ -1,1 +1,4 @@
-/* Phase 0 placeholder. Owner: Dev 4. */
+@import './MentorHome.css';
+.wq-mentor-filters { display: grid; grid-template-columns: minmax(0, 2fr) minmax(160px, .75fr); gap: 12px; align-items: end; }
+.wq-mentor-students .wq-table td:last-child { min-width: 150px; }
+@media (max-width: 820px) { .wq-mentor-filters { grid-template-columns: minmax(0, 1fr); } }
