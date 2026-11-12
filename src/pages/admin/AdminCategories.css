@@ -1,1 +1,21 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* AdminCategories page, values from the prototype. Owner: Dev 2. */
+
+.wq-admin-categories-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.wq-admin-categories-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.wq-admin-categories-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
