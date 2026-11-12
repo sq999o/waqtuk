@@ -1,1 +1,53 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Input styles. Owner: Dev 2. */
+
+.wq-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.wq-input label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.wq-input-star {
+  color: var(--muted);
+}
+
+.wq-input input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.wq-input input:disabled {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.wq-input input[aria-invalid="true"] {
+  border-color: var(--err);
+}
+
+.wq-input-hint,
+.wq-input-error {
+  margin: 0;
+  font-size: 12px;
+}
+
+.wq-input-hint {
+  color: var(--muted);
+}
+
+.wq-input-error {
+  color: var(--err);
+}
+
