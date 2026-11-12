@@ -1,1 +1,74 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.wq-table {
+  width: 100%;
+  min-width: max-content;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+}
+
+.wq-table th {
+  padding: 12px 16px;
+  color: var(--muted);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.wq-table td {
+  padding: 14px 16px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+.wq-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.wq-table-align--left {
+  text-align: left;
+}
+
+.wq-table-align--center {
+  text-align: center;
+}
+
+.wq-table-align--right {
+  text-align: right;
+}
+
+.wq-table__row--clickable {
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.wq-table__row--clickable:hover {
+  background: var(--surface-2);
+}
+
+.wq-table__row--clickable:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: -2px;
+}
+
+.wq-table__empty-row td {
+  padding: 28px 16px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 13px;
+}
