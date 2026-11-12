@@ -1,1 +1,12 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-confirm-dialog__message {
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.wq-confirm-dialog--danger .wq-confirm-dialog__message {
+  color: var(--text);
+}
