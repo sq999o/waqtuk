@@ -1,1 +1,83 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-mentorstudent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+}
+
+.wq-mentorstudent-access-card {
+  min-width: 0;
+}
+
+/* Access and date controls */
+
+.wq-mentorstudent-fields {
+  width: 100%;
+  min-width: 0;
+  align-items: end;
+  gap: 16px;
+}
+
+.wq-mentorstudent-fields > * {
+  min-width: 0;
+}
+
+.wq-mentorstudent-readonly-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wq-mentorstudent-field-label {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.wq-mentorstudent-readonly-value {
+  display: flex;
+  align-items: center;
+
+  min-height: 44px;
+  padding: 0 12px;
+
+  background: var(--surface);
+  color: var(--muted-card);
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-apply {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.wq-mentorstudent-apply button {
+  min-width: 88px;
+}
+
+/* Alerts */
+
+.wq-mentorstudent-range-error {
+  margin-top: 16px;
+}
+
+.wq-mentorstudent-scope {
+  margin-top: 16px;
+}
+
+/* Text wrapping */
+
+.wq-mentorstudent-readonly-value,
+.wq-mentorstudent-scope {
+  overflow-wrap: anywhere;
+}
