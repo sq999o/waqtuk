@@ -1,1 +1,46 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Card styles, values from the prototype. Owner: Dev 2. */
+
+.wq-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg);
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.wq-card--md {
+  padding: 24px;
+}
+
+.wq-card--lg {
+  padding: 32px;
+}
+
+.wq-card--none {
+  padding: 0;
+}
+
+.wq-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wq-card-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 820px) {
+  .wq-card--md,
+  .wq-card--lg {
+    padding: 20px;
+  }
+}
