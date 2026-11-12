@@ -1,1 +1,129 @@
-/* Phase 0 placeholder. Owner: Dev 3. */
+
+.wq-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 100%;
+  min-width: 0;
+
+  color: var(--text);
+}
+
+.wq-feedback-grid {
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+}
+
+.wq-feedback-list-card,
+.wq-feedback-detail-card {
+  min-width: 0;
+}
+
+/* Filters */
+
+.wq-feedback-filters {
+  margin-bottom: 16px;
+  min-width: 0;
+}
+
+/* Feedback list */
+
+.wq-feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wq-feedback-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.wq-feedback-row:hover {
+  background: var(--surface-2);
+}
+
+.wq-feedback-row--selected {
+  background: var(--lav);
+  border-color: var(--lav-text);
+}
+
+.wq-feedback-row--selected:hover {
+  background: var(--lav);
+}
+
+.wq-feedback-row:focus-visible {
+  outline: 2px solid #5B6CF0;
+  outline-offset: 2px;
+}
+
+.wq-feedback-row-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wq-feedback-mentor {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wq-feedback-date {
+  margin-left: auto;
+
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.wq-feedback-row-text {
+  display: block;
+
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+/* Detail card placeholder */
+
+.wq-feedback-detail-placeholder {
+  min-height: 160px;
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .wq-feedback-row {
+    transition: none;
+  }
+}
