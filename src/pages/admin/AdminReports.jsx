@@ -4,6 +4,7 @@ import {
   Alert,
   Button,
   Card,
+  ConfirmDialog,
   Input,
   PageHeader,
   Select,
@@ -119,18 +120,21 @@ export default function AdminReports() {
   function handleSearchChange(event) {
     setSearch(event.target.value);
     setSelectedId(null);
+    setRemoveOpen(false);
   }
 
   function handleStatusChange(event) {
     setStatusFilter(event.target.value);
     setSelectedId(null);
     setDecisionError('');
+    setRemoveOpen(false);
   }
 
   function handleSelectReport(report) {
     setSelectedId(report.id);
     setDecisionReason('');
     setDecisionError('');
+    setRemoveOpen(false);
   }
 
   function handleDecisionError(error) {
@@ -158,11 +162,44 @@ export default function AdminReports() {
     toast.show('Decision recorded. Report closed.');
   }
 
+  // Validate before showing the remove confirmation.
   function openRemove() {
     if (!selectedReport || isClosed) return;
 
+    if (!decisionReason.trim()) {
+      setDecisionError(ERROR_MESSAGES.required);
+      return;
+    }
+
     setDecisionError('');
     setRemoveOpen(true);
+  }
+
+  // Confirm removal using the existing moderation action.
+  function handleConfirmRemove() {
+    if (!selectedReport || isClosed) {
+      setRemoveOpen(false);
+      return;
+    }
+
+    const result = decideReport(
+      selectedReport.id,
+      'removed',
+      decisionReason
+    );
+
+    if (!result.ok) {
+      setRemoveOpen(false);
+      setDecisionError(result.error);
+      return;
+    }
+
+    setRemoveOpen(false);
+    setDecisionReason('');
+    setDecisionError('');
+    setSelectedId(null);
+
+    toast.show('Decision recorded. Report closed.');
   }
 
   function formatReportDate(date) {
@@ -375,6 +412,17 @@ export default function AdminReports() {
           )}
         </Card>
       </div>
+
+      <ConfirmDialog
+        open={removeOpen}
+        title="Remove this content?"
+        message="The content is removed and other pending reports for it are closed."
+        confirmLabel="Remove Content"
+        cancelLabel="Cancel"
+        tone="danger"
+        onConfirm={handleConfirmRemove}
+        onCancel={() => setRemoveOpen(false)}
+      />
     </div>
   );
 }
