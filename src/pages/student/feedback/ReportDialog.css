@@ -1,0 +1,25 @@
+
+.wq-reportdialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.wq-reportdialog-form > * {
+  min-width: 0;
+}
+
+.wq-reportdialog-modal .wq-modal-content {
+  padding-bottom: 24px;
+}
+
+.wq-reportdialog-modal .wq-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}

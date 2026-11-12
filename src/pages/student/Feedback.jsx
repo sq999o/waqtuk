@@ -15,6 +15,7 @@ import {
   formatDateLong,
   formatHours,
 } from '../../utils/time';
+import ReportDialog from './feedback/ReportDialog';
 import './Feedback.css';
 
 const FILTER_OPTIONS = [
@@ -54,17 +55,16 @@ export default function Feedback() {
     document.title = 'Mentor feedback · Waqtuk';
   }, []);
 
-  // myFeedback is already sorted newest first
-  // and excludes removed feedback.
+  // The selector returns visible feedback, newest first.
   const filteredFeedback = myFeedback.filter(
     (item) =>
       filter === 'all' || item.type === filter
   );
 
   const selectedItem =
-    filteredFeedback.find((item) => item.id === selectedId) ??
-    filteredFeedback[0] ??
-    null;
+    filteredFeedback.find(
+      (item) => item.id === selectedId
+    ) ?? filteredFeedback[0] ?? null;
 
   const selectedGoal = myGoals.find(
     (goal) => goal.id === selectedItem?.goalId
@@ -82,8 +82,7 @@ export default function Feedback() {
     ? TYPE_CONFIG[selectedItem.type] ?? TYPE_CONFIG.comment
     : null;
 
-  // Find the current student's most recent report
-  // for the selected feedback item.
+  // Find this student's most recent report for the item.
   const selectedReport = contentReports
     .filter(
       (report) =>
@@ -108,13 +107,6 @@ export default function Feedback() {
     setReportOpen(true);
   }
 
-  function handleRowKeyDown(event, item) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleSelect(item);
-    }
-  }
-
   function formatGoalWeek(date) {
     return formatDateLong(date).replace(/\s+\d{4}$/, '');
   }
@@ -135,7 +127,9 @@ export default function Feedback() {
             <SegmentedControl
               options={FILTER_OPTIONS}
               value={filter}
-              onChange={handleFilterChange}
+              onChange={(value) => {
+                handleFilterChange(value);
+              }}
             />
           </div>
 
@@ -158,12 +152,11 @@ export default function Feedback() {
                     type="button"
                     className={[
                       'wq-feedback-row',
-                      isSelected ? 'wq-feedback-row--selected' : '',
+                      isSelected
+                        ? 'wq-feedback-row--selected'
+                        : '',
                     ].filter(Boolean).join(' ')}
                     onClick={() => handleSelect(item)}
-                    onKeyDown={(event) =>
-                      handleRowKeyDown(event, item)
-                    }
                     aria-pressed={isSelected}
                   >
                     <span className="wq-feedback-row-top">
@@ -264,6 +257,12 @@ export default function Feedback() {
           )}
         </Card>
       </div>
+
+      <ReportDialog
+        open={reportOpen && Boolean(selectedItem)}
+        onClose={() => setReportOpen(false)}
+        item={selectedItem}
+      />
     </div>
   );
 }
