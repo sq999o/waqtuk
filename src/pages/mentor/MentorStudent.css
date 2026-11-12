@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-
   width: 100%;
   min-width: 0;
   color: var(--text);
@@ -13,7 +12,7 @@
   min-width: 0;
 }
 
-/* Access and date controls */
+/* Access controls */
 
 .wq-mentorstudent-fields {
   width: 100%;
@@ -41,13 +40,11 @@
 .wq-mentorstudent-readonly-value {
   display: flex;
   align-items: center;
-
   min-height: 44px;
   padding: 0 12px;
 
   background: var(--surface);
   color: var(--muted-card);
-
   border: 1px solid var(--border);
   border-radius: 10px;
 
@@ -65,17 +62,85 @@
   min-width: 88px;
 }
 
-/* Alerts */
-
-.wq-mentorstudent-range-error {
-  margin-top: 16px;
-}
-
+.wq-mentorstudent-range-error,
 .wq-mentorstudent-scope {
   margin-top: 16px;
 }
 
-/* Text wrapping */
+/* Summary cards */
+
+.wq-mentorstudent-summary-grid {
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  gap: 16px;
+}
+
+.wq-mentorstudent-totals-card,
+.wq-mentorstudent-distribution-card,
+.wq-mentorstudent-goals-card {
+  min-width: 0;
+}
+
+/* Category totals */
+
+.wq-mentorstudent-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wq-mentorstudent-category span {
+  overflow-wrap: anywhere;
+}
+
+/* Shared goal progress */
+
+.wq-mentorstudent-goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wq-mentorstudent-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.wq-mentorstudent-goal + .wq-mentorstudent-goal {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.wq-mentorstudent-goal-title {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.wq-mentorstudent-goal-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.wq-mentorstudent-goal .wq-btn {
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.wq-mentorstudent-goal-notice {
+  margin-top: 16px;
+}
+
+/* General wrapping */
 
 .wq-mentorstudent-readonly-value,
 .wq-mentorstudent-scope {

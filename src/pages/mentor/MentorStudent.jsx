@@ -5,12 +5,30 @@ import {
   Alert,
   Button,
   Card,
-  Input,
+  CategoryDot,
   PageHeader,
+  ProgressBar,
   Select,
+  Input,
+  Table,
 } from '../../components/ui';
+import { DonutChart } from '../../components/charts';
 import { useData } from '../../context/DataContext';
-import { formatDateShort, formatHours } from '../../utils/time';
+import {
+  formatDateShort,
+  formatDuration,
+  formatHours,
+  endOfWeek,
+} from '../../utils/time';
+import {
+  sumByCategory,
+  totalMinutes,
+  percentages,
+} from '../../utils/stats';
+import {
+  goalProgress,
+  goalMessage,
+} from '../../utils/goals';
 import './MentorStudent.css';
 
 function formatApprovedRange(from, to) {
@@ -26,11 +44,8 @@ function formatApprovedRange(from, to) {
   return `${formatDateShort(from)} ${fromYear} – ${formatDateShort(to)} ${toYear}`;
 }
 
-function formatGoalScope(goal, categories) {
-  const category = categories.find(
-    (item) => item.id === goal.categoryId
-  );
-
+function formatGoalScope(goal, getCategory) {
+  const category = getCategory?.(goal.categoryId);
   const name = category?.name ?? goal.categoryId;
   const direction =
     goal.direction === 'atLeast' ? 'at least' : 'at most';
@@ -38,17 +53,10 @@ function formatGoalScope(goal, categories) {
   return `${name} (${direction} ${formatHours(goal.targetMinutes)})`;
 }
 
-function formatScope(scope, goals) {
-  const parts = [];
-
-  if (scope.includes('summary')) parts.push('Summary');
-  if (scope.includes('reports')) parts.push('Reports');
-
-  const goalNames = goals.map((goal) => ({
-    ...goal,
-  }));
-
-  return { parts, goalNames };
+function progressTone(status) {
+  if (status === 'reached') return 'success';
+  if (status === 'exceeded') return 'danger';
+  return 'primary';
 }
 
 export default function MentorStudent() {
@@ -58,7 +66,7 @@ export default function MentorStudent() {
   const {
     sharedStudents = [],
     getSharedData,
-    categories = [],
+    getCategory,
   } = useData();
 
   const sharedEntry = sharedStudents.find(
@@ -88,7 +96,6 @@ export default function MentorStudent() {
 
   const [rangeError, setRangeError] = useState('');
 
-  // Reset date fields whenever the sharing request changes.
   useEffect(() => {
     setViewFrom(request?.from ?? '');
     setViewTo(request?.to ?? '');
@@ -140,38 +147,148 @@ export default function MentorStudent() {
     }
 
     setRangeError('');
-
     setAppliedRange({
       from: viewFrom,
       to: viewTo,
     });
   }
 
-  // Activities have already been limited by the
-  // sharing selector. Apply only the narrower view range.
-  const visibleActivities = activities.filter(
-    (activity) => {
-      const date = activity.start.slice(0, 10);
+  // These activities have already been restricted
+  // to the approved dates by getSharedData().
+  const visibleActivities = activities.filter((activity) => {
+    const date = activity.start.slice(0, 10);
 
-      return (
-        date >= appliedRange.from &&
-        date <= appliedRange.to
-      );
-    }
+    return (
+      date >= appliedRange.from &&
+      date <= appliedRange.to
+    );
+  });
+
+  const scope = request?.scope ?? [];
+  const showSummary = scope.includes('summary');
+
+  const scopeParts = [];
+
+  if (scope.includes('summary')) scopeParts.push('Summary');
+  if (scope.includes('reports')) scopeParts.push('Reports');
+
+  goals.forEach((goal) => {
+    scopeParts.push(`goal ${formatGoalScope(goal, getCategory)}`);
+  });
+
+  const scopeDescription = scopeParts.join(', ');
+
+  // Category totals for the applied date range.
+  const totalsByCategory = sumByCategory(
+    activities,
+    appliedRange.from,
+    appliedRange.to
   );
 
-  const scopeItems = request
-    ? formatScope(request.scope ?? [], goals)
-    : { parts: [], goalNames: [] };
-
-  const goalDescriptions = scopeItems.goalNames.map(
-    (goal) => formatGoalScope(goal, categories)
+  const total = totalMinutes(
+    activities,
+    appliedRange.from,
+    appliedRange.to
   );
 
-  const scopeDescription = [
-    ...scopeItems.parts,
-    ...goalDescriptions.map((description) => `goal ${description}`),
-  ].join(', ');
+  const categoryTotals = Object.entries(totalsByCategory)
+    .filter(([, minutes]) => minutes > 0)
+    .map(([categoryId, minutes]) => {
+      const category = getCategory?.(categoryId);
+
+      return {
+        id: categoryId,
+        name: category?.name ?? categoryId,
+        color: category?.color,
+        minutes,
+      };
+    });
+
+  const shares = percentages(
+    categoryTotals.map((item) => item.minutes)
+  );
+
+  const categoryRows = categoryTotals.map((item, index) => ({
+    ...item,
+    share: shares[index] ?? 0,
+  }));
+
+  const tableRows = [
+    ...categoryRows,
+    {
+      id: 'total',
+      name: 'Total',
+      minutes: total,
+      share: total > 0 ? 100 : 0,
+      isTotal: true,
+    },
+  ];
+
+  const tableColumns = [
+    {
+      key: 'name',
+      header: 'Category',
+      render: (row) =>
+        row.isTotal ? (
+          <strong>{row.name}</strong>
+        ) : (
+          <span className="wq-mentorstudent-category">
+            <CategoryDot color={row.color} />
+            <span>{row.name}</span>
+          </span>
+        ),
+    },
+    {
+      key: 'minutes',
+      header: 'Time',
+      align: 'right',
+      render: (row) =>
+        row.isTotal ? (
+          <strong>{formatDuration(row.minutes)}</strong>
+        ) : (
+          formatDuration(row.minutes)
+        ),
+    },
+    {
+      key: 'share',
+      header: 'Share',
+      align: 'right',
+      render: (row) =>
+        row.isTotal ? (
+          <strong>{row.share}%</strong>
+        ) : (
+          `${row.share}%`
+        ),
+    },
+  ];
+
+  const donutSegments = categoryRows.map((item) => ({
+    id: item.id,
+    label: item.name,
+    minutes: item.minutes,
+    color: item.color,
+  }));
+
+  // Each shared goal uses its own week.
+  // Never read activities outside getSharedData().
+  const goalRows = goals.map((goal) => {
+    const goalTotals = sumByCategory(
+      activities,
+      goal.weekStart,
+      endOfWeek(goal.weekStart)
+    );
+
+    const logged = goalTotals[goal.categoryId] ?? 0;
+    const progress = goalProgress(goal, logged);
+
+    return {
+      goal,
+      logged,
+      progress,
+      name: getCategory?.(goal.categoryId)?.name ??
+        goal.categoryId,
+    };
+  });
 
   if (!hasAccess) {
     return (
@@ -261,6 +378,87 @@ export default function MentorStudent() {
           No shared activity in the selected dates.
         </Alert>
       )}
+
+      <div className="wq-mentorstudent-summary-grid wq-g">
+        {showSummary && (
+          <>
+            <Card
+              title="Category totals"
+              className="wq-mentorstudent-totals-card"
+            >
+              <Table
+                columns={tableColumns}
+                rows={tableRows}
+                rowKey="id"
+                emptyText="No shared activity in the selected dates."
+              />
+            </Card>
+
+            <Card
+              title="Time distribution"
+              className="wq-mentorstudent-distribution-card"
+            >
+              <DonutChart
+                segments={donutSegments}
+                centerValue={formatDuration(total)}
+                centerLabel="logged"
+              />
+            </Card>
+          </>
+        )}
+
+        {goals.length > 0 && (
+          <Card
+            title="Shared goal progress"
+            className="wq-mentorstudent-goals-card"
+          >
+            <div className="wq-mentorstudent-goals-list">
+              {goalRows.map(({ goal, logged, progress, name }) => (
+                <div
+                  key={goal.id}
+                  className="wq-mentorstudent-goal"
+                >
+                  <div className="wq-mentorstudent-goal-title">
+                    {name} (
+                    {goal.direction === 'atLeast'
+                      ? 'at least'
+                      : 'at most'}
+                    {' '}
+                    {formatHours(goal.targetMinutes)})
+                  </div>
+
+                  <ProgressBar
+                    value={progress.logged}
+                    max={progress.target}
+                    tone={progressTone(progress.status)}
+                    label={`${name} goal progress`}
+                  />
+
+                  <p className="wq-mentorstudent-goal-description">
+                    Logged {formatHours(logged)} of{' '}
+                    {formatHours(goal.targetMinutes)}
+                    {' · '}
+                    {goalMessage(goal, logged)}
+                  </p>
+
+                  <Button
+                    variant="primary"
+                    to={`/mentor/goals/${goal.id}`}
+                  >
+                    Give feedback on this goal
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <div className="wq-mentorstudent-goal-notice">
+              <Alert tone="info">
+                Private notes are hidden.
+              </Alert>
+            </div>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }
