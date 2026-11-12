@@ -5,10 +5,12 @@ import {
   Button,
   Card,
   CategoryDot,
+  ConfirmDialog,
   PageHeader,
   ProgressBar,
 } from '../../components/ui';
 import { useData } from '../../context/DataContext';
+import { useToast } from '../../context/ToastContext';
 import {
   TODAY,
   addDays,
@@ -27,7 +29,10 @@ export default function Goals() {
     myGoals = [],
     myActivities = [],
     getCategory,
+    deleteGoal,
   } = useData();
+
+  const toast = useToast();
 
   const [weekStart, setWeekStart] = useState(
     () => startOfWeek(TODAY)
@@ -36,6 +41,7 @@ export default function Goals() {
   const [formOpen, setFormOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   useEffect(() => {
     document.title = 'Goals · Waqtuk';
@@ -78,7 +84,27 @@ export default function Goals() {
 
   function openDeleteGoal(goal) {
     setSelectedGoal(goal);
+    setDeleteError('');
     setDeleteOpen(true);
+  }
+
+  function closeDeleteGoal() {
+    setDeleteOpen(false);
+    setSelectedGoal(null);
+    setDeleteError('');
+  }
+
+  function handleDeleteGoal() {
+    if (!selectedGoal) return;
+
+    const result = deleteGoal(selectedGoal.id);
+
+    if (!result.ok) {
+      setDeleteError(result.error);
+      return;
+    }
+
+    closeDeleteGoal();
   }
 
   function getProgressTone(status) {
@@ -92,6 +118,14 @@ export default function Goals() {
     if (status === 'exceeded') return 'danger';
     return 'neutral';
   }
+
+  const selectedCategory = selectedGoal
+    ? getCategory?.(selectedGoal.categoryId)
+    : null;
+
+  const deleteMessage = selectedGoal
+    ? `The goal "${selectedCategory?.name ?? selectedGoal.categoryId}" for this week will be removed. Logged activities are not affected.`
+    : '';
 
   return (
     <div className="wq-goals">
@@ -128,14 +162,10 @@ export default function Goals() {
       </div>
 
       <div className="wq-goals-grid wq-g">
-        <Card
-          title="Goal list"
-          className="wq-goals-list-card"
-        >
+        <Card title="Goal list" className="wq-goals-list-card">
           {weekGoals.length === 0 ? (
             <div className="wq-goals-empty">
               <p>No goals for this week.</p>
-
               <Button onClick={openAddGoal}>
                 + Add Goal
               </Button>
@@ -143,36 +173,16 @@ export default function Goals() {
           ) : (
             <div className="wq-goals-list">
               {weekGoals.map((goal) => {
-                const category = getCategory?.(
-                  goal.categoryId
-                );
-
+                const category = getCategory?.(goal.categoryId);
                 const logged =
                   totalsByCategory[goal.categoryId] ?? 0;
-
-                const progress = goalProgress(
-                  goal,
-                  logged
-                );
-
-                const progressTone = getProgressTone(
-                  progress.status
-                );
-
-                const badgeTone = getBadgeTone(
-                  progress.status
-                );
+                const progress = goalProgress(goal, logged);
 
                 return (
-                  <div
-                    key={goal.id}
-                    className="wq-goals-item"
-                  >
+                  <div key={goal.id} className="wq-goals-item">
                     <div className="wq-goals-item-header">
                       <div className="wq-goals-item-info">
-                        <CategoryDot
-                          color={category?.color}
-                        />
+                        <CategoryDot color={category?.color} />
 
                         <span className="wq-goals-category-name">
                           {category?.name ?? goal.categoryId}
@@ -207,21 +217,19 @@ export default function Goals() {
                     <ProgressBar
                       value={progress.logged}
                       max={progress.target}
-                      tone={progressTone}
+                      tone={getProgressTone(progress.status)}
                       label={`${category?.name ?? goal.categoryId} goal progress`}
                     />
 
                     <div className="wq-goals-item-footer">
                       <span className="wq-goals-logged">
                         Logged{' '}
-                        <strong>
-                          {formatHours(progress.logged)}
-                        </strong>
+                        <strong>{formatHours(progress.logged)}</strong>
                         {' '}of{' '}
                         {formatHours(progress.target)}
                       </span>
 
-                      <Badge tone={badgeTone}>
+                      <Badge tone={getBadgeTone(progress.status)}>
                         {goalMessage(goal, logged)}
                       </Badge>
                     </div>
@@ -239,6 +247,23 @@ export default function Goals() {
         goal={selectedGoal}
         defaultWeekStart={weekStart}
       />
+
+      <ConfirmDialog
+        open={deleteOpen}
+        title="Delete goal?"
+        message={deleteMessage}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        tone="danger"
+        onConfirm={handleDeleteGoal}
+        onCancel={closeDeleteGoal}
+      />
+
+      {deleteError && (
+        <div role="alert" className="wq-goals-delete-error">
+          {deleteError}
+        </div>
+      )}
     </div>
   );
 }
