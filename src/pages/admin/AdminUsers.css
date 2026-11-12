@@ -1,1 +1,26 @@
-/* Phase 0 placeholder. Owner: Dev 4. */
+.wq-adminusers { display: grid; gap: 24px; min-width: 0; color: var(--text); font-size: 14px; }
+.wq-adminusers .wq-page-header h1 { margin: 0 0 8px; font-size: 24px; font-weight: 600; }
+.wq-adminusers .wq-page-header p, .wq-adminusers-note { margin: 0; color: var(--muted); line-height: 1.5; }
+.wq-adminusers-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); gap: 16px; align-items: start; }
+.wq-adminusers-card { min-width: 0; padding: 24px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; }
+.wq-adminusers-card > header h2 { margin: 0 0 16px; font-size: 14px; }
+.wq-adminusers-filters { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+.wq-adminusers-stack { display: grid; gap: 16px; min-width: 0; }
+.wq-adminusers-stack > p { margin: 0; line-height: 1.5; overflow-wrap: anywhere; }
+.wq-adminusers-readonly { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.wq-adminusers-readonly input { background: var(--surface-2); color: var(--muted-card); }
+.wq-adminusers-status { display: grid; gap: 12px; margin: 20px 0 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.wq-adminusers-status h3 { margin: 0; font-size: 14px; }
+.wq-adminusers-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.wq-adminusers .wq-textarea, .wq-adminusers-dialog .wq-textarea { display: grid; gap: 8px; min-width: 0; }
+.wq-adminusers textarea, .wq-adminusers-dialog textarea { width: 100%; min-height: 88px; resize: vertical; border: 1px solid var(--border); border-radius: 10px; padding: 12px; background: var(--bg); color: var(--text); }
+.wq-adminusers-dialog textarea[aria-invalid="true"] { border-color: var(--err); }
+.wq-adminusers-dialog .wq-textarea-error { color: var(--err); margin: 0; }
+.wq-adminusers-name { padding: 6px; border: 0; border-radius: 6px; background: transparent; color: var(--text); font-weight: 600; text-align: left; cursor: pointer; }
+.wq-adminusers-name[aria-pressed="true"] { background: var(--lav); color: var(--lav-text); }
+.wq-adminusers-alert { padding: 14px; border-radius: 10px; line-height: 1.5; overflow-wrap: anywhere; }
+.wq-adminusers-alert--danger { background: var(--err-bg); color: var(--err); }
+.wq-adminusers-alert--success { background: var(--ok-bg); color: var(--ok); }
+.wq-adminusers .wq-button { max-width: 100%; white-space: normal; }
+@media (max-width: 1000px) { .wq-adminusers-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 540px) { .wq-adminusers-filters { grid-template-columns: minmax(0, 1fr); } .wq-adminusers-card { padding: 16px; } }
