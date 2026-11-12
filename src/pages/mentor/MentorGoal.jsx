@@ -58,13 +58,14 @@ function getProgressTone(status) {
 export default function MentorGoal() {
   const { id: goalId } = useParams();
 
-  const {
-    sharedStudents = [],
-    getSharedData,
-    currentUser,
-    feedback = [],
-    getCategory,
-  } = useData();
+const {
+  sharedStudents = [],
+  getSharedData,
+  currentUser,
+  feedback = [],
+  getCategory,
+  addFeedback,
+} = useData();
 
   const toast = useToast();
 
