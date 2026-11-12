@@ -1,1 +1,7 @@
 /* Phase 0 placeholder. Owner: Dev 1. */
+
+.wq-category-dot {
+  flex: none;
+  display: inline-block;
+  vertical-align: middle;
+}

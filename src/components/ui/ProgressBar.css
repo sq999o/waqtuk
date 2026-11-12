@@ -1,1 +1,31 @@
 /* Phase 0 placeholder. Owner: Dev 1. */
+
+.wq-progress-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.wq-progress-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+.wq-progress-bar--primary .wq-progress-bar-fill {
+  background: var(--primary);
+}
+
+.wq-progress-bar--success .wq-progress-bar-fill {
+  background: var(--ok-solid);
+}
+
+.wq-progress-bar--warning .wq-progress-bar-fill {
+  background: var(--warn);
+}
+
+.wq-progress-bar--danger .wq-progress-bar-fill {
+  background: var(--danger);
+}
