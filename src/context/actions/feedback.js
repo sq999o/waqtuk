@@ -179,5 +179,15 @@ export function reportFeedback(data, id, reason, details, ctx) {
   };
 }
 
-// Future action:
-// decideReport(data, id, decision, reason, ctx)
+/**
+ * Temporary placeholder until moderation logic is implemented.
+ */
+export function decideReport(data, id, decision, reason, ctx) {
+  return {
+    data,
+    result: {
+      ok: false,
+      error: 'Report decision not implemented yet.',
+    },
+  };
+}
