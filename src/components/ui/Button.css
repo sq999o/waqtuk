@@ -1,1 +1,77 @@
-/* Phase 0 placeholder. Owner: Dev 2. */
+/* Button styles. Owner: Dev 2. */
+
+.wq-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.wq-button--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.wq-button--secondary {
+  background: var(--bg);
+  color: var(--text) ;
+  border-color:  var(--border);
+}
+
+.wq-button--ghost {
+  background: transparent;
+  color:var(--text);
+}
+
+.wq-button--danger {
+  background: var(--danger) ;
+  color:var(--on-danger) ;
+}
+
+
+.wq-button--sm {
+  height: 40px;
+  padding: 0 14px;
+}
+
+.wq-button--full {
+  width: 100%;
+}
+
+.wq-button:hover {
+  opacity: 0.88;
+}
+
+.wq-button--secondary:hover,
+.wq-button--ghost:hover {
+  background: var(--surface-2);
+  opacity: 1;
+}
+
+.wq-button:disabled,
+.wq-button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wq-button-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: wq-button-spin 0.7s linear infinite;
+}
+
+@keyframes wq-button-spin {
+  to { transform: rotate(360deg); }
+}
