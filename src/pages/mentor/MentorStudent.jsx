@@ -597,15 +597,16 @@ export default function MentorStudent() {
           <div className="wq-mentorstudent-reports-grid wq-g">
             <div className="wq-mentorstudent-reports-list">
               <Table
-                columns={reportColumns}
-                rows={weeklyReports}
-                rowKey="id"
-                onRowClick={(row) => {
-                  if (row.covered) {
-                    setSelectedWeek(row.id);
-                  }
-                }}
-              />
+  columns={reportColumns}
+  rows={weeklyReports}
+  rowKey="id"
+  selectedKey={selectedReport?.id}
+  onRowClick={(row) => {
+    if (row.covered) {
+      setSelectedWeek(row.id);
+    }
+  }}
+/>
             </div>
 
             <div className="wq-mentorstudent-report-detail">

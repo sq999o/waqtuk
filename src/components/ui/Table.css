@@ -61,6 +61,19 @@
   background: var(--surface-2);
 }
 
+
+/* Selected table row */
+
+.wq-table-row.wq-table__row--selected,
+.wq-table-row.wq-table__row--selected:hover {
+  background: var(--surface-2);
+}
+
+.wq-table-row.wq-table__row--selected:focus-visible {
+  outline: 2px solid #5B6CF0;
+  outline-offset: -2px;
+}
+
 .wq-table__row--clickable:focus-visible {
   outline: 2px solid var(--blue);
   outline-offset: -2px;
