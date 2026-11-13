@@ -1,0 +1,14 @@
+/* ProfileCard styles, values from the prototype. Owner: Dev 2. */
+
+.wq-profile-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wq-profile-card-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
