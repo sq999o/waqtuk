@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import {
+  Alert,
   Badge,
   Button,
   Card,
@@ -105,6 +106,7 @@ export default function Goals() {
     }
 
     closeDeleteGoal();
+    toast.show('Goal deleted.');
   }
 
   function getProgressTone(status) {
@@ -162,10 +164,14 @@ export default function Goals() {
       </div>
 
       <div className="wq-goals-grid wq-g">
-        <Card title="Goal list" className="wq-goals-list-card">
+        <Card
+          title="Goal list"
+          className="wq-goals-list-card"
+        >
           {weekGoals.length === 0 ? (
             <div className="wq-goals-empty">
               <p>No goals for this week.</p>
+
               <Button onClick={openAddGoal}>
                 + Add Goal
               </Button>
@@ -174,15 +180,22 @@ export default function Goals() {
             <div className="wq-goals-list">
               {weekGoals.map((goal) => {
                 const category = getCategory?.(goal.categoryId);
+
                 const logged =
                   totalsByCategory[goal.categoryId] ?? 0;
+
                 const progress = goalProgress(goal, logged);
 
                 return (
-                  <div key={goal.id} className="wq-goals-item">
+                  <div
+                    key={goal.id}
+                    className="wq-goals-item"
+                  >
                     <div className="wq-goals-item-header">
                       <div className="wq-goals-item-info">
-                        <CategoryDot color={category?.color} />
+                        <CategoryDot
+                          color={category?.color}
+                        />
 
                         <span className="wq-goals-category-name">
                           {category?.name ?? goal.categoryId}
@@ -224,7 +237,9 @@ export default function Goals() {
                     <div className="wq-goals-item-footer">
                       <span className="wq-goals-logged">
                         Logged{' '}
-                        <strong>{formatHours(progress.logged)}</strong>
+                        <strong>
+                          {formatHours(progress.logged)}
+                        </strong>
                         {' '}of{' '}
                         {formatHours(progress.target)}
                       </span>
@@ -260,8 +275,10 @@ export default function Goals() {
       />
 
       {deleteError && (
-        <div role="alert" className="wq-goals-delete-error">
-          {deleteError}
+        <div className="wq-goals-delete-error">
+          <Alert tone="danger">
+            {deleteError}
+          </Alert>
         </div>
       )}
     </div>
