@@ -219,7 +219,13 @@ export default function MentorStudent() {
     scopeParts.push(`goal ${formatGoalScope(goal, getCategory)}`);
   });
 
-  const scopeDescription = scopeParts.join(', ');
+  // Join the final item with "and" for natural wording.
+  const scopeDescription =
+    scopeParts.length <= 1
+      ? scopeParts.join('')
+      : scopeParts.length === 2
+        ? scopeParts.join(' and ')
+        : `${scopeParts.slice(0, -1).join(', ')} and ${scopeParts.at(-1)}`;
 
   // Summary calculations use only approved activities.
   const totalsByCategory = sumByCategory(
@@ -234,6 +240,8 @@ export default function MentorStudent() {
     appliedRange.to
   );
 
+  // Follow the category order supplied by useData(),
+  // rather than the order of the logged activities.
   const categoryTotals = Object.entries(totalsByCategory)
     .filter(([, minutes]) => minutes > 0)
     .map(([categoryId, minutes]) => {
@@ -245,6 +253,20 @@ export default function MentorStudent() {
         color: category?.color,
         minutes,
       };
+    })
+    .sort((a, b) => {
+      const indexA = categories.findIndex(
+        (category) => category.id === a.id
+      );
+
+      const indexB = categories.findIndex(
+        (category) => category.id === b.id
+      );
+
+      return (
+        (indexA === -1 ? Infinity : indexA) -
+        (indexB === -1 ? Infinity : indexB)
+      );
     });
 
   const shares = percentages(
