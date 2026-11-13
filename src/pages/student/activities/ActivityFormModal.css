@@ -1,0 +1,12 @@
+
+#wq-activity-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wq-activity-form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}

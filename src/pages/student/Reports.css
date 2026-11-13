@@ -1,1 +1,71 @@
-/* Phase 0 placeholder. Owner: Dev 1. */
+/* Reports.css  (Owner: Dev 1)
+   Layout of the Reports page and the print rules. Classes start with wq-reports. Variables only (no hex colors). */
+
+.wq-reports {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* The Export PDF button and its note */
+.wq-reports-export {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wq-reports-export span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Start date, End date, Apply (.wq-g makes it one column on phones) */
+.wq-reports-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+
+/* Category totals on the left, Time distribution on the right */
+.wq-reports-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* The dot and the name of a category */
+.wq-reports-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Export PDF = the browser print dialog: only the report is printed */
+@media print {
+  /* Hide the sidebar, the top bar, the mobile backdrop, the export button and the filters */
+  .wq-appshell-sidebar,
+  .wq-appshell-backdrop,
+  .wq-topbar,
+  .wq-reports-export,
+  .wq-reports-filter-card {
+    display: none !important;
+  }
+
+  /* The sidebar is gone, so the page uses the whole paper width */
+  .wq-appshell-body {
+    margin-left: 0 !important;
+  }
+
+  .wq-appshell-main {
+    padding: 0 !important;
+  }
+
+  /* Browsers drop backgrounds when printing: keep the category dots and the donut colors */
+  .wq-reports * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
