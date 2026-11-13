@@ -1,3 +1,4 @@
+// Phase 0 placeholder. Owner: Dev 1.
 // Calendar: a month grid with a dot on the days that have activities, a panel for the selected day
 // and an "Activity details" panel. Owner: Dev 1.
 import { useEffect, useState } from 'react';
