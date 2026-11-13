@@ -1,1 +1,43 @@
 /* Phase 0 placeholder. Owner: Dev 1. */
+
+.wq-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wq-dashboard-period {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wq-dashboard-period span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.wq-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.wq-dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.wq-dashboard-comparison {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wq-dashboard-comparison > div {
+  color: var(--muted);
+}
