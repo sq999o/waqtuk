@@ -11,8 +11,8 @@ import './Topbar.css';
 const BREADCRUMBS = {
   student: {
     '/dashboard': ['Overview', 'Dashboard'],
-    '/activities': ['Tracking', 'Activities'],
-    '/calendar': ['Planning', 'Calendar'],
+    '/activities': ['Overview', 'Activities'],
+    '/calendar': ['Overview', 'Calendar'],
     '/reports': ['Overview', 'Reports'],
     '/goals': ['Planning', 'Goals'],
     '/categories': ['Planning', 'Categories'],
@@ -77,7 +77,6 @@ function getInitials(name) {
 function recentAnnouncementCount(items) {
   if (!Array.isArray(items)) return 0;
 
-  // Inclusive seven-day window ending on TODAY.
   const end = new Date(`${TODAY}T00:00:00Z`);
   const start = new Date(end);
   start.setUTCDate(start.getUTCDate() - 6);

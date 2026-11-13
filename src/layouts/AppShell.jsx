@@ -157,16 +157,17 @@ export default function AppShell() {
       )}
 
       <aside
-        ref={drawerRef}
-        className={[
-          'wq-appshell-sidebar',
-          drawerOpen ? 'wq-appshell-sidebar--open' : ''
-        ].filter(Boolean).join(' ')}
-        aria-label="Main navigation"
-        tabIndex={-1}
-      >
-        <Sidebar />
-      </aside>
+  id="wq-appshell-navigation"
+  ref={drawerRef}
+  className={[
+    'wq-appshell-sidebar',
+    drawerOpen ? 'wq-appshell-sidebar--open' : ''
+  ].filter(Boolean).join(' ')}
+  aria-label="Main navigation"
+  tabIndex={-1}
+>
+  <Sidebar />
+</aside>
 
       <div className="wq-appshell-body">
         <Topbar
