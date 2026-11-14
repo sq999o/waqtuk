@@ -1,4 +1,4 @@
-// Phase 0 placeholder. Owner: Dev 1.
+// AdminDashboard: platform usage totals for a date range, with quick links. Owner: Dev 1.
 
 import { useEffect, useState } from 'react';
 import { Button, Card, Input, PageHeader, StatCard } from '../../components/ui';

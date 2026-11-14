@@ -1,4 +1,4 @@
-// Phase 0 placeholder. Owner: Dev 1.
+// Dashboard: totals, charts and goal progress for a day, week or month. Owner: Dev 1.
 // Dashboard: totals, charts and goal progress for a day, week or month. Owner: Dev 1.
 import { useEffect, useState } from 'react';
 import { Button, Card, EmptyState, Icon, PageHeader, ProgressBar, SegmentedControl, StatCard } from '../../components/ui';

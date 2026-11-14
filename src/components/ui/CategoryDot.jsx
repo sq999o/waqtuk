@@ -1,4 +1,4 @@
-// Phase 0 unstyled placeholder. Owner: Dev 1.
+// CategoryDot: a small colored circle next to a category name. Owner: Dev 1.
 
 import './CategoryDot.css';
 

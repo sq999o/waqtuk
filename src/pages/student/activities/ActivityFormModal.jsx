@@ -7,6 +7,26 @@ import { TODAY } from '../../../utils/time.js';
 import { MESSAGES } from '../../../utils/validators';
 import './ActivityFormModal.css';
 
+// '2026-11-4' -> '2026-11-04' and ' 2026-11-04 ' -> '2026-11-04'. Other texts stay as they are (the validator rejects them).
+function cleanDate(text) {
+  const value = text.trim();
+  const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(value);
+
+  if (!match) return value;
+
+  return `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+}
+
+// '9:00' -> '09:00'
+function cleanTime(text) {
+  const value = text.trim();
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value);
+
+  if (!match) return value;
+
+  return `${match[1].padStart(2, '0')}:${match[2]}`;
+}
+
 function emptyForm(defaultDate) {
   return {
     categoryId: '',
@@ -65,8 +85,8 @@ export default function ActivityFormModal({
 
     const payload = {
       categoryId: form.categoryId,
-      start: `${form.startDate}T${form.startTime}`,
-      end: `${form.endDate}T${form.endTime}`,
+      start: `${cleanDate(form.startDate)}T${cleanTime(form.startTime)}`,
+      end: `${cleanDate(form.endDate)}T${cleanTime(form.endTime)}`,
       notes: form.notes
     };
 
@@ -179,4 +199,3 @@ export default function ActivityFormModal({
     </Modal>
   );
 }
-

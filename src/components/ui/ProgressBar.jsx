@@ -1,4 +1,4 @@
-// Phase 0 unstyled placeholder. Owner: Dev 1.
+// ProgressBar: a horizontal bar clamped between 0 and 100 with four tones. Owner: Dev 1.
 
 import './ProgressBar.css';
 
