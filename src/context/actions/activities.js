@@ -1,4 +1,4 @@
-// Phase 0 no-op actions. No validation or data changes yet.
+// Activity actions: addActivity, updateActivity and deleteActivity (pure functions). Owner: Dev 1.
 /*
   activities.js (actions)  (Owner: Dev 1)
   Pure functions: (data, ...args, ctx) -> { data, result }. They never change the data they receive.

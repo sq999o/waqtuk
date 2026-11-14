@@ -1,4 +1,4 @@
-// Phase 0 validators: no validation yet. Copy exact prototype texts in Phase 1.
+// Activity validator: required fields, end after start, overlap and no future activities. Owner: Dev 1.
 
 import { isFuture, formatDateLong, formatActivityRange } from '../time.js';
 

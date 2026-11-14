@@ -1,4 +1,4 @@
-// Phase 0 unstyled placeholder. Owner: Dev 1.
+// Badge: a small rounded label with five tones (neutral, success, warning, danger, info). Owner: Dev 1.
 
 import './Badge.css';
 
