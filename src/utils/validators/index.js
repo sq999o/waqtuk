@@ -8,3 +8,5 @@ import { messages as categoryMessages } from './category.js';
 import { messages as goalMessages } from './goal.js';
 import { messages as accountMessages } from './account.js';
 export const MESSAGES = { ...activityMessages, ...categoryMessages, ...goalMessages, ...accountMessages };
+// Explicitly resolve the duplicate lowercase exports from the four validators.
+export { MESSAGES as messages };
