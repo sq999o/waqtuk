@@ -9,10 +9,12 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { Toast } from '../components/ui';
+import { useTheme } from './ThemeContext';
 
 const ToastContext = createContext(null);
 
 export function ToastProvider({ children }) {
+  const { themeClass } = useTheme();
   // One toast object { message, tone }, or null when nothing is shown
   const [toast, setToast] = useState(null);
 
@@ -36,7 +38,8 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ show }}>
       {children}
-      {toast && <Toast message={toast.message} tone={toast.tone} />}
+      {/* This sibling of App must receive its own scoped theme tokens. */}
+      {toast && <Toast className={themeClass} message={toast.message} tone={toast.tone} />}
     </ToastContext.Provider>
   );
 }
