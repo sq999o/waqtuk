@@ -1,1 +1,44 @@
 /* Phase 0 placeholder. Owner: Dev 1. */
+
+.wq-admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wq-admin-dashboard-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.wq-admin-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.wq-admin-dashboard-usage {
+  display: flex;
+  flex-direction: column;
+}
+
+.wq-admin-dashboard-usage-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.wq-admin-dashboard-usage p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.wq-admin-dashboard-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
