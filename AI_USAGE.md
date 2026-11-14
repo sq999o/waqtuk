@@ -39,6 +39,27 @@
 
 **Evidence:** the full session export is `conversations/C03-Hammad-Claude-Code-Session-1.pdf` (and `.md`, and the raw `.jsonl`) in the team evidence ZIP. Artifacts: `A10` (review patch), `A11` (header script), `A12` (generated sample data). Images in the session are not visible in the PDF/Markdown; they are kept in the raw `.jsonl`. The export ends at the time it was made.
 
-### Other team members
 
-Each teammate must add their own actual tools, affected files, and evidence references. This section makes no declaration on their behalf. The supplied `Waqtuk_Design_Instructions.pdf` states that Claude assisted the design; the member responsible must disclose that use and provide the complete conversation. Do not attribute it to Saeed without confirmation.
+### Abdallah Al-Mogbel — [KFUPM ID] — Dev 3
+
+**Tool:** OpenAI ChatGPT (GPT-6), used through the ChatGPT web interface during Phase 4 development in November 2026. ChatGPT generated code primarily as text, which I manually copied into the repository. I also used ChatGPT for debugging, code revisions, implementation explanations, testing guidance and Git workflows.
+
+**Purposes:** Interpreting project requirements and integration contracts; generating and revising Dev 3 components, layouts, utilities, actions, selectors, seed data and pages; debugging implementation and integration errors; reviewing validation, sharing permissions and student privacy; checking design compliance; preparing testing procedures, Git commands, pull request descriptions and AI usage documentation.
+
+**Affected files/areas:**
+
+- Shared UI components and CSS: `src/components/ui/Modal.*`, `ConfirmDialog.*`, `SegmentedControl.*` and `Table.*`.
+- Application layouts and CSS: `src/layouts/AppShell.*` and `Topbar.*`.
+- Goal utilities and validation: `src/utils/goals.js` and `src/utils/validators/goal.js`.
+- Seed data: `src/data/goals.json`, `feedback.json` and `reports.json`.
+- Context actions and selectors: `src/context/actions/goals.js`, `feedback.js` and `src/context/selectors/goals.js`.
+- Student pages and forms: `src/pages/student/Goals.*`, `Feedback.*`, `goals/GoalFormModal.*` and `feedback/ReportDialog.*`.
+- Mentor pages and CSS: `src/pages/mentor/MentorStudent.*` and `MentorGoal.*`.
+- Administrator page and CSS: `src/pages/admin/AdminReports.*`.
+- Development and integration assistance: troubleshooting the `ReportDialog` export error, restoring the `decideReport` action contract, correcting breadcrumbs and accessibility issues, reviewing design states, preparing temporary testing scripts, reviewing security concerns and providing Git/PR instructions.
+
+**Independent modifications:** After integrating the AI-assisted implementation, I independently rewrote `src/layouts/AppShell.jsx` and `src/layouts/AppShell.css` to implement desktop sidebar collapsing. On screens wider than 820px, the menu button now collapses the sidebar and expands the content area. Clicking it again restores the sidebar with a 200ms animation. I also removed two rules from `src/layouts/Topbar.css` that controlled the menu button's desktop and mobile visibility. I implemented and tested these modifications myself in a real browser.
+
+**Verification:** I used `npm run build` and `npm run check:contracts` during development. ChatGPT provided testing procedures for goal management, mentor feedback, content reporting, administrator moderation, sharing permissions, weekly reports, light/dark mode, 390px mobile responsiveness and keyboard accessibility. I reviewed and integrated the generated code, investigated build errors and tested my independent desktop sidebar changes in a real browser. The testing procedures provided by ChatGPT are not claimed as completed automated tests.
+
+**Evidence:** The ChatGPT development conversation is linked here: [ChatGPT conversation](INSERT_CONVERSATION_URL). A PDF export of the conversation is included as `conversations/C04-Abdallah-ChatGPT-Waqtuk-Conversation.pdf`. The AI-assisted code before my independent modifications is provided in `artifacts/A13-Dev3-AI-Assisted-Baseline.zip`. The code was originally generated as text in ChatGPT and manually integrated into the repository.
