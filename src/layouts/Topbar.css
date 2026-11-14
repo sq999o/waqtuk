@@ -106,9 +106,7 @@
   outline-offset: 2px;
 }
 
-.wq-topbar-menu-button {
-  display: none;
-}
+
 
 .wq-topbar-bell {
   overflow: visible;
@@ -252,9 +250,7 @@
     gap: 8px;
   }
 
-  .wq-topbar-menu-button {
-    display: inline-flex;
-  }
+  
 
   .wq-topbar-breadcrumb {
     gap: 8px;

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
@@ -6,11 +5,30 @@ import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import './AppShell.css';
 
+const SIDEBAR_STORAGE_KEY = 'waqtuk.sidebar';
+const MOBILE_QUERY = '(max-width: 820px)';
+
+// Read the saved desktop choice. Falls back to "open" if storage fails.
+function readCollapsed() {
+  try {
+    return window.localStorage.getItem(SIDEBAR_STORAGE_KEY) === 'collapsed';
+  } catch {
+    return false;
+  }
+}
+
+function readIsMobile() {
+  if (typeof window === 'undefined' || !window.matchMedia) return false;
+  return window.matchMedia(MOBILE_QUERY).matches;
+}
+
 export default function AppShell() {
   const { themeClass } = useTheme();
   const location = useLocation();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(readIsMobile);
+  const [collapsed, setCollapsed] = useState(readCollapsed);
   const previousPathRef = useRef(location.pathname);
   const menuButtonRef = useRef(null);
   const drawerRef = useRef(null);
@@ -22,6 +40,47 @@ export default function AppShell() {
   function toggleDrawer() {
     setDrawerOpen((previous) => !previous);
   }
+
+  // Under 820 px the button opens the drawer.
+  // Above 820 px it collapses or restores the sidebar.
+  function handleMenuClick() {
+    if (isMobile) {
+      toggleDrawer();
+    } else {
+      setCollapsed((previous) => !previous);
+    }
+  }
+
+  // Follow the 820 px breakpoint, and close the drawer on desktop.
+  useEffect(() => {
+    if (!window.matchMedia) return undefined;
+
+    const query = window.matchMedia(MOBILE_QUERY);
+
+    function handleChange(event) {
+      setIsMobile(event.matches);
+      if (!event.matches) setDrawerOpen(false);
+    }
+
+    setIsMobile(query.matches);
+    query.addEventListener('change', handleChange);
+
+    return () => {
+      query.removeEventListener('change', handleChange);
+    };
+  }, []);
+
+  // Remember the desktop choice after a reload.
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        SIDEBAR_STORAGE_KEY,
+        collapsed ? 'collapsed' : 'open'
+      );
+    } catch {
+      // Storage can be blocked; the sidebar still works for this visit.
+    }
+  }, [collapsed]);
 
   // Close the mobile drawer when the route changes.
   useEffect(() => {
@@ -145,7 +204,13 @@ export default function AppShell() {
   }, [drawerOpen]);
 
   return (
-    <div className={`${themeClass} wq-appshell`}>
+    <div
+      className={[
+        themeClass,
+        'wq-appshell',
+        collapsed ? 'wq-appshell--collapsed' : '',
+      ].filter(Boolean).join(' ')}
+    >
       {drawerOpen && (
         <button
           type="button"
@@ -157,22 +222,22 @@ export default function AppShell() {
       )}
 
       <aside
-  id="wq-appshell-navigation"
-  ref={drawerRef}
-  className={[
-    'wq-appshell-sidebar',
-    drawerOpen ? 'wq-appshell-sidebar--open' : ''
-  ].filter(Boolean).join(' ')}
-  aria-label="Main navigation"
-  tabIndex={-1}
->
-  <Sidebar />
-</aside>
+        id="wq-appshell-navigation"
+        ref={drawerRef}
+        className={[
+          'wq-appshell-sidebar',
+          drawerOpen ? 'wq-appshell-sidebar--open' : '',
+        ].filter(Boolean).join(' ')}
+        aria-label="Main navigation"
+        tabIndex={-1}
+      >
+        <Sidebar />
+      </aside>
 
       <div className="wq-appshell-body">
         <Topbar
-          onMenuClick={toggleDrawer}
-          menuOpen={drawerOpen}
+          onMenuClick={handleMenuClick}
+          menuOpen={isMobile ? drawerOpen : !collapsed}
           menuButtonRef={menuButtonRef}
         />
 

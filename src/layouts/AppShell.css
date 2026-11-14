@@ -1,4 +1,3 @@
-
 .wq-appshell {
   display: flex;
   min-height: 100vh;
@@ -95,26 +94,6 @@
     pointer-events: auto;
   }
 
-  /*
-   * Dev 1's global mobile rule turns .wq-side
-   * into a top strip using !important.
-   * Override that rule only inside our drawer.
-   */
-  .wq-appshell .wq-appshell-sidebar .wq-side {
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-
-    width: 100% !important;
-    height: auto !important;
-    min-height: 100%;
-
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
   .wq-appshell-backdrop {
     display: block;
 
@@ -140,8 +119,32 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Desktop collapse: only above 820 px. Under 820 px the drawer is used. */
+@media (min-width: 821px) {
   .wq-appshell-sidebar {
+    transition:
+      transform 200ms ease,
+      visibility 200ms ease;
+  }
+
+  .wq-appshell-body {
+    transition: margin-left 200ms ease;
+  }
+
+  .wq-appshell--collapsed .wq-appshell-sidebar {
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .wq-appshell--collapsed .wq-appshell-body {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wq-appshell-sidebar,
+  .wq-appshell-body {
     transition: none;
   }
 }
