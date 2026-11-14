@@ -40,7 +40,7 @@
 **Evidence:** the full session export is `conversations/C03-Hammad-Claude-Code-Session-1.pdf` (and `.md`, and the raw `.jsonl`) in the team evidence ZIP. Artifacts: `A10` (review patch), `A11` (header script), `A12` (generated sample data). Images in the session are not visible in the PDF/Markdown; they are kept in the raw `.jsonl`. The export ends at the time it was made.
 
 
-### Abdallah Al-Mogbel — [KFUPM ID] — Dev 3
+### Abdallah Al-Mogbel — 202340310 — Dev 3
 
 **Tool:** OpenAI ChatGPT (GPT-6), used through the ChatGPT web interface during Phase 4 development in November 2026. ChatGPT generated code primarily as text, which I manually copied into the repository. I also used ChatGPT for debugging, code revisions, implementation explanations, testing guidance and Git workflows.
 
@@ -63,3 +63,25 @@
 **Verification:** I used `npm run build` and `npm run check:contracts` during development. ChatGPT provided testing procedures for goal management, mentor feedback, content reporting, administrator moderation, sharing permissions, weekly reports, light/dark mode, 390px mobile responsiveness and keyboard accessibility. I reviewed and integrated the generated code, investigated build errors and tested my independent desktop sidebar changes in a real browser. The testing procedures provided by ChatGPT are not claimed as completed automated tests.
 
 **Evidence:** The ChatGPT development conversation is linked here: [ChatGPT conversation](INSERT_CONVERSATION_URL). A PDF export of the conversation is included as `conversations/C04-Abdallah-ChatGPT-Waqtuk-Conversation.pdf`. The AI-assisted code before my independent modifications is provided in `artifacts/A13-Dev3-AI-Assisted-Baseline.zip`. The code was originally generated as text in ChatGPT and manually integrated into the repository.
+
+### Fahad Altuwayjiri — 202370250 — Dev 2
+
+**Tool:** Claude Code (Claude Opus 5.5), in the Claude desktop app on my laptop, in one session from 8 to 14 November 2026. I didn't use any other AI tool or autocomplete in this phase.
+
+**How we worked:** most of the work was shared between us. I wrote some parts myself, Claude Code wrote or helped me with others, and I went through every piece before committing it. I can explain all of it.
+
+**Purposes:** going through the work split, the design notes and the prototype pages with me; writing, or helping me write, my components, my category and announcement logic, the sidebar and my pages; running the build and contract checks and trying the pages in a local browser; explaining each piece; drafting commit messages and PR descriptions for me to look over; and helping me prepare this section and my part of the declaration.
+
+**Affected files:**
+
+- Data and logic: `src/utils/validators/category.js`, `src/data/categories.json`, `src/data/announcements.json`, `src/context/actions/categories.js`, `src/context/actions/announcements.js` and `src/context/selectors/catalog.js`.
+- UI components and CSS: `src/components/ui/Button.*`, `Input.*`, `Select.*`, `Textarea.*`, `Checkbox.*`, `Radio.*`, `Icon.*`, `Card.*`, `Alert.*` and `PageHeader.*`.
+- Layout: `src/layouts/Sidebar.*`, `src/layouts/navConfig.js` and `src/layouts/AuthLayout.*`.
+- Pages and CSS: `src/pages/student/Categories.*`, `src/pages/admin/AdminCategories.*`, `src/pages/admin/AdminAnnouncements.*`, `src/pages/mentor/MentorAnnouncements.*`, `src/pages/student/Profile.*`, `src/pages/student/profile/ProfileCard.*`, `src/pages/mentor/MentorProfile.*` and `src/pages/dev/ComponentsPreview.*`.
+- Documentation: my section of this file.
+
+**My own work:** commit `7af8cc3` (data persistence and `makeId` in `src/context/DataContext.jsx` and `src/utils/ids.js`, 9 November) is mine with no AI help, so it has no `Assisted-by` line and those two files aren't listed above. My other 14 commits, from `8a976ee` to `ebd1a04` (PRs #17 to #37), had AI help, and each one ends with `Assisted-by: Claude Code (Claude Opus 5.5)`.
+
+**Verification:** `npm run check:contracts` and `npm run build` passed for each piece, and each page was tried in a local browser (light mode, dark mode in places, and phone width) before its PR was merged.
+
+**Evidence:** the full session is `conversations/C05-Fahad-Claude-Code-Session-1.raw.jsonl` in the team evidence ZIP, with a text export as `.md` and `.pdf` (images only in the `.jsonl`; only my email address is redacted; the export ends at the time it was made). Artifacts `A14` to `A27` in `artifacts/fahad-altuwayjiri/` are the 14 commits above as patches.
